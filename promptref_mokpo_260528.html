@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 프롬프트 레퍼런스 시트 · 목포공업고 · 2026.05.28-29</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ── Screen wrapper ── */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: #EFEFEF;
+      padding: 20px;
+      color: #111;
+    }
+
+    .screen-header {
+      max-width: 760px;
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .sh-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .sh-meta {
+      font-size: 11px;
+      color: #888;
+    }
+
+    .sh-btn {
+      background: #1c1c1a;
+      color: #fff;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* ── A4 page container ── */
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 13mm 13mm 11mm;
+    }
+
+    /* ── Page header ── */
+    .ph {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 2px solid #111;
+      padding-bottom: 5px;
+      margin-bottom: 8px;
+    }
+
+    .ph-left h1 {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: #111;
+    }
+
+    .ph-left p {
+      font-size: 9px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .ph-right {
+      font-size: 9px;
+      color: #888;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    /* ── Two-column layout ── */
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    /* ── Section card ── */
+    .sec {
+      border: 1px solid #E0E0E0;
+      border-radius: 5px;
+      overflow: hidden;
+      break-inside: avoid;
+    }
+
+    .sec-h {
+      background: #1c1c1a;
+      color: #fff;
+      padding: 5px 9px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sec-icon {
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .sec-name {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .sec-tool {
+      margin-left: auto;
+      font-size: 9px;
+      color: rgba(255, 255, 255, 0.55);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .sec-b {
+      padding: 7px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    /* Sub label */
+    .sub-lbl {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: #999;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Steps list */
+    .steps {
+      list-style: none;
+    }
+
+    .steps li {
+      font-size: 9.5px;
+      color: #333;
+      padding: 2px 0 2px 13px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .steps li::before {
+      content: attr(data-n);
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: #888;
+      font-size: 8.5px;
+    }
+
+    /* Prompt box */
+    .pbox {
+      background: #F5F5F5;
+      border: 1px solid #E8E8E8;
+      border-radius: 4px;
+      padding: 5px 7px;
+    }
+
+    .pbox .plbl {
+      font-size: 8px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .pbox .ptxt {
+      font-size: 9px;
+      color: #333;
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    .pbox .ptxt b {
+      color: #111;
+    }
+
+    /* Tool chips */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .chip {
+      font-size: 8.5px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: #1c1c1a;
+      color: #fff;
+    }
+
+    .chip.s {
+      background: #555;
+    }
+
+    .chip.l {
+      background: #EFEFEF;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+
+    /* URL row */
+    .url-row {
+      font-size: 9px;
+      color: #888;
+      font-weight: 700;
+    }
+
+    /* Tip text */
+    .tip {
+      font-size: 8.5px;
+      color: #888;
+      line-height: 1.55;
+    }
+
+    .tip b {
+      color: #555;
+    }
+
+    /* Divider inside a section */
+    .sec-divider {
+      border: none;
+      border-top: 1px dashed #E5E5E5;
+    }
+
+    /* Option label */
+    .opt-lbl {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: #555;
+      margin-bottom: 2px;
+    }
+
+    /* ── URL Reference ── */
+    .url-ref {
+      margin-top: 8px;
+      border: 1px solid #E0E0E0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .url-ref-h {
+      background: #333;
+      color: #fff;
+      padding: 5px 9px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .url-ref-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .ur-item {
+      padding: 5px 8px;
+      border-right: 1px solid #EFEFEF;
+      border-bottom: 1px solid #EFEFEF;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .ur-item:nth-child(4n) {
+      border-right: none;
+    }
+
+    .ur-item:nth-last-child(-n+4) {
+      border-bottom: none;
+    }
+
+    .ur-name {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: #111;
+    }
+
+    .ur-url {
+      font-size: 8px;
+      color: #888;
+      font-weight: 600;
+    }
+
+    .ur-role {
+      font-size: 8px;
+      color: #555;
+    }
+
+    /* ── Bottom two-col row ── */
+    .bottom-row {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .pres-items {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .pres-item {
+      font-size: 9px;
+      color: #333;
+      padding: 3px 7px;
+      background: #F5F5F5;
+      border-radius: 3px;
+      line-height: 1.5;
+    }
+
+    .pres-item b {
+      color: #111;
+    }
+
+    .eval-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .eval-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      padding: 3px 7px;
+      background: #F5F5F5;
+      border-radius: 3px;
+    }
+
+    .eval-badge {
+      font-size: 8px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: #1c1c1a;
+      color: #fff;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .eval-badge.b {
+      background: #555;
+    }
+
+    .eval-desc {
+      font-size: 8.5px;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    /* ── Submit flow strip ── */
+    .flow-strip {
+      margin-top: 8px;
+      background: #1c1c1a;
+      border-radius: 5px;
+      padding: 7px 11px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .flow-lbl {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+
+    .flow-step {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .flow-arr {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ── Print ── */
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .screen-header {
+        display: none;
+      }
+
+      .page {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+      }
+
+      .sec-h {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .flow-strip {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .chip {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .url-ref-h {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .eval-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 11mm 13mm;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="screen-header">
+    <div>
+      <div class="sh-title">AI 프롬프트 레퍼런스 시트 · 목포공업고 AI 특강</div>
+      <div class="sh-meta">A4 세로 인쇄 · 팀당 1장 배부 또는 칠판 부착</div>
+    </div>
+    <button class="sh-btn" onclick="window.print()">🖨 인쇄하기</button>
+  </div>
+
+  <div class="page">
+
+    <!-- Page header -->
+    <div class="ph">
+      <div class="ph-left">
+        <h1>AI 프롬프트 레퍼런스 시트 — 2교시 팀 협업 AI 숏폼 제작</h1>
+        <p>목포공업고등학교 AI 전문가 특강 · 2026.05.28-29 · 5인 팀 협업 · 총 40분 제작</p>
+      </div>
+      <div class="ph-right">
+        반 ______ · 조 ______<br>
+        팀명 ________________
+      </div>
+    </div>
+
+    <!-- Two columns -->
+    <div class="cols">
+
+      <!-- LEFT COLUMN -->
+      <div style="display:flex;flex-direction:column;gap:8px">
+
+        <!-- 스크립트 -->
+        <div class="sec">
+          <div class="sec-h">
+            <span class="sec-icon">✍</span>
+            <span class="sec-name">스크립트 담당</span>
+            <span class="sec-tool">ROLE 01</span>
+          </div>
+          <div class="sec-b">
+            <div class="chips">
+              <span class="chip">ChatGPT</span>
+              <span class="chip s">Gemini</span>
+              <span class="chip l">Claude</span>
+            </div>
+            <div>
+              <div class="sub-lbl">팀 스크립트 프롬프트</div>
+              <div class="pbox">
+                <span class="ptxt">
+                  "우리 팀 주제: <b>[주제]</b> / 대상: 목포공업고 학생 / 45초 숏폼 스크립트 / 장면 6개<br>
+                  형식: 장면번호 | 자막(대사) | 화면설명 | 이미지 프롬프트(영문)<br>
+                  마지막 장면 임팩트 한 줄 결론"
+                </span>
+              </div>
+            </div>
+            <div class="tip"><b>완료 후:</b> 생성된 스크립트 단톡방에 공유 → 나래이터·이미지 담당이 바로 활용</div>
+          </div>
+        </div>
+
+        <!-- 나래이터 -->
+        <div class="sec">
+          <div class="sec-h">
+            <span class="sec-icon">🎤</span>
+            <span class="sec-name">나래이터 담당</span>
+            <span class="sec-tool">ROLE 02</span>
+          </div>
+          <div class="sec-b">
+            <div>
+              <div class="opt-lbl">Option A — Typecast AI <span style="color:#888;font-weight:400">(추천)</span></div>
+              <div class="url-row">🔗 typecast.ai</div>
+              <ol class="steps" style="margin-top:3px">
+                <li data-n="1.">typecast.ai 접속 → 구글 계정 로그인</li>
+                <li data-n="2.">스크립트 대사 붙여넣기 → AI 목소리 선택</li>
+                <li data-n="3.">MP3 다운로드 → 단톡방에 전송</li>
+              </ol>
+            </div>
+            <hr class="sec-divider">
+            <div>
+              <div class="opt-lbl">Option B — 셀프 녹음</div>
+              <ol class="steps">
+                <li data-n="1.">기본 녹음 앱으로 대사 직접 녹음</li>
+                <li data-n="2.">CapCut → "음질 개선" AI 기능 적용</li>
+                <li data-n="3.">파일 → 편집 담당에게 단톡방 전송</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- 배경음악 -->
+        <div class="sec">
+          <div class="sec-h">
+            <span class="sec-icon">🎵</span>
+            <span class="sec-name">배경음악 담당</span>
+            <span class="sec-tool">ROLE 03</span>
+          </div>
+          <div class="sec-b">
+            <div class="chips"><span class="chip">Suno AI</span></div>
+            <div class="url-row">🔗 suno.com</div>
+            <ol class="steps">
+              <li data-n="1.">suno.com 접속 → 구글 계정 로그인</li>
+              <li data-n="2.">"Custom" 선택 → 아래 프롬프트 입력</li>
+              <li data-n="3.">"Instrumental" 체크 (가사 없음) → 생성 클릭</li>
+              <li data-n="4.">30~60초 클립 선택 → MP3 다운로드 → 단톡방 전송</li>
+            </ol>
+            <div class="pbox">
+              <span class="plbl">💬 Suno 프롬프트 예시</span>
+              <span class="ptxt">"upbeat tech background music, motivational, no vocals, Korean youth education short
+                video, 45 seconds, electronic, bright"</span>
+            </div>
+            <div class="tip"><b>팁:</b> 여러 개 생성해서 영상 분위기에 가장 잘 맞는 것 선택</div>
+          </div>
+        </div>
+
+      </div><!-- /left -->
+
+      <!-- RIGHT COLUMN -->
+      <div style="display:flex;flex-direction:column;gap:8px">
+
+        <!-- 이미지·영상 -->
+        <div class="sec">
+          <div class="sec-h">
+            <span class="sec-icon">🖼</span>
+            <span class="sec-name">이미지·영상 담당</span>
+            <span class="sec-tool">ROLE 04</span>
+          </div>
+          <div class="sec-b">
+            <div>
+              <div class="opt-lbl">이미지 생성 — Gemini / ChatGPT 앱</div>
+              <ol class="steps">
+                <li data-n="1.">Gemini 앱 또는 ChatGPT 앱 열기</li>
+                <li data-n="2.">스크립트의 '이미지 프롬프트(영문)' 그대로 입력</li>
+                <li data-n="3.">이미지 생성 → 갤러리 저장 → 단톡방 전송</li>
+              </ol>
+              <div class="pbox" style="margin-top:4px">
+                <span class="plbl">💬 이미지 프롬프트 추가 팁</span>
+                <span class="ptxt">스크립트 프롬프트 끝에 추가: <b>", photorealistic, bright lighting, high quality,
+                    16:9"</b></span>
+              </div>
+            </div>
+            <hr class="sec-divider">
+            <div>
+              <div class="opt-lbl">영상 생성 (선택) — Grok / Flow</div>
+              <div class="url-row">🔗 grok.com &nbsp;&nbsp; 🔗 flow.google.com</div>
+              <ol class="steps" style="margin-top:3px">
+                <li data-n="1.">접속 → 장면 설명 텍스트 입력</li>
+                <li data-n="2.">짧은 클립(3~5초) 생성 → 단톡방 전송</li>
+              </ol>
+            </div>
+            <div class="tip"><b>주의:</b> 이미지가 이상하면 프롬프트 더 구체적으로 수정 후 재시도</div>
+          </div>
+        </div>
+
+        <!-- 편집 -->
+        <div class="sec">
+          <div class="sec-h">
+            <span class="sec-icon">✂</span>
+            <span class="sec-name">편집 담당</span>
+            <span class="sec-tool">ROLE 05</span>
+          </div>
+          <div class="sec-b">
+            <div class="chips"><span class="chip">CapCut</span></div>
+            <ol class="steps">
+              <li data-n="1.">단톡방 소스 파일 전부 다운로드 (이미지·음성·음악)</li>
+              <li data-n="2.">CapCut 새 프로젝트 → 이미지·영상 클립 순서대로 배치</li>
+              <li data-n="3.">나래이터 오디오 삽입 → 클립 길이 맞추기</li>
+              <li data-n="4.">배경음악 추가 → 볼륨 <b>20~30%</b>로 낮추기</li>
+              <li data-n="5.">"텍스트 → 자동 자막" AI 기능 → 폰트·크기·색 조정</li>
+              <li data-n="6.">전환 효과 · 필터 적용 (2~3개면 충분)</li>
+              <li data-n="7.">1080p 내보내기 → 단톡방 완성본 공유</li>
+            </ol>
+            <div class="tip">
+              <b>배터리 50%+ 유지 필수</b> &nbsp;·&nbsp; 파일 전송 시 "원본 화질" 선택<br>
+              Wi-Fi 끊기면 핫스팟 ON &nbsp;·&nbsp; 느리면 이미지 5장 이내로 줄이기
+            </div>
+          </div>
+        </div>
+
+        <!-- 주제 선택 참고 -->
+        <div class="sec">
+          <div class="sec-h">
+            <span class="sec-icon">💡</span>
+            <span class="sec-name">팀 주제 선택 가이드</span>
+            <span class="sec-tool">기획</span>
+          </div>
+          <div class="sec-b">
+            <div class="sub-lbl">추천 주제 (전공 × AI 교차점)</div>
+            <div class="tip" style="line-height:1.9">
+              ① AI가 내 전공(기계·전기·자동차 등)을 어떻게 바꾸는가?<br>
+              ② AI 도구로 공부·취업을 준비하는 방법<br>
+              ③ 일상에서 AI를 써본 경험 · 놀라운 점<br>
+              ④ 미래 AI 직업 중 내가 하고 싶은 것
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /right -->
+
+    </div><!-- /cols -->
+
+    <!-- URL Quick Reference -->
+    <div class="url-ref">
+      <div class="url-ref-h">🔗 전체 AI 도구 URL 빠른 참조 — 모르면 여기서 확인!</div>
+      <div class="url-ref-grid">
+        <div class="ur-item">
+          <span class="ur-name">ChatGPT</span>
+          <span class="ur-url">chatgpt.com</span>
+          <span class="ur-role">스크립트 · 이미지 생성</span>
+        </div>
+        <div class="ur-item">
+          <span class="ur-name">Gemini</span>
+          <span class="ur-url">gemini.google.com</span>
+          <span class="ur-role">스크립트 · 이미지 생성</span>
+        </div>
+        <div class="ur-item">
+          <span class="ur-name">Claude</span>
+          <span class="ur-url">claude.ai</span>
+          <span class="ur-role">스크립트 초안·수정</span>
+        </div>
+        <div class="ur-item">
+          <span class="ur-name">Typecast AI</span>
+          <span class="ur-url">typecast.ai</span>
+          <span class="ur-role">AI 나레이션·목소리</span>
+        </div>
+        <div class="ur-item">
+          <span class="ur-name">Suno AI</span>
+          <span class="ur-url">suno.com</span>
+          <span class="ur-role">AI 배경음악 작곡</span>
+        </div>
+        <div class="ur-item">
+          <span class="ur-name">Grok</span>
+          <span class="ur-url">grok.com</span>
+          <span class="ur-role">이미지 · AI 영상 생성</span>
+        </div>
+        <div class="ur-item">
+          <span class="ur-name">Flow</span>
+          <span class="ur-url">flow.google.com</span>
+          <span class="ur-role">Google AI 영상 생성</span>
+        </div>
+        <div class="ur-item">
+          <span class="ur-name">CapCut</span>
+          <span class="ur-url">앱 설치 (스마트폰)</span>
+          <span class="ur-role">영상 편집 · AI 자막</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row: Presentation + Evaluation -->
+    <div class="bottom-row">
+
+      <!-- 발표 핵심 포인트 -->
+      <div class="sec">
+        <div class="sec-h">
+          <span class="sec-icon">🎤</span>
+          <span class="sec-name">발표 핵심 포인트 (팀당 2~3분)</span>
+        </div>
+        <div class="sec-b">
+          <div class="pres-items">
+            <div class="pres-item"><b>① 선택한 주제와 이유</b> — 왜 이 주제를 골랐는지 한 문장</div>
+            <div class="pres-item"><b>② 사용한 AI 도구</b> — 역할별로 어떤 AI를 사용했는지</div>
+            <div class="pres-item"><b>③ 가장 어려웠던 점</b> — 제작 중 막혔던 순간과 해결법</div>
+            <div class="pres-item"><b>④ 오늘 배운 것</b> — AI를 써보고 느낀 점 한 줄 요약</div>
+          </div>
+          <div class="tip" style="margin-top:2px">💡 완성이 안 됐어도 OK — 어떤 AI를 왜 썼는지 설명하면 충분합니다</div>
+        </div>
+      </div>
+
+      <!-- 결과물 평가 기준 -->
+      <div class="sec">
+        <div class="sec-h">
+          <span class="sec-icon">⭐</span>
+          <span class="sec-name">결과물 평가 기준</span>
+        </div>
+        <div class="sec-b">
+          <div class="eval-grid">
+            <div class="eval-item">
+              <span class="eval-badge">핵심</span>
+              <span class="eval-desc"><b>창의성</b> — 주제가 독창적인가? AI를 창의적으로 활용했는가?</span>
+            </div>
+            <div class="eval-item">
+              <span class="eval-badge">핵심</span>
+              <span class="eval-desc"><b>협업</b> — 5명이 고르게 참여했는가? 역할 분담이 잘 됐는가?</span>
+            </div>
+            <div class="eval-item">
+              <span class="eval-badge b">보조</span>
+              <span class="eval-desc"><b>완성도</b> — 영상이 완성됐는가? 자막·음악이 어울리는가?</span>
+            </div>
+            <div class="eval-item">
+              <span class="eval-badge b">보조</span>
+              <span class="eval-desc"><b>발표</b> — 제작 과정을 잘 설명했는가? 배운 점을 말할 수 있는가?</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /bottom-row -->
+
+    <!-- Submit flow strip -->
+    <div class="flow-strip">
+      <span class="flow-lbl">📤 제출 플로우</span>
+      <span class="flow-step">CapCut 1080p 내보내기</span>
+      <span class="flow-arr">›</span>
+      <span class="flow-step">Padlet QR 스캔</span>
+      <span class="flow-arr">›</span>
+      <span class="flow-step">영상 업로드</span>
+      <span class="flow-arr">›</span>
+      <span class="flow-step">팀명 · 주제 입력</span>
+      <span class="flow-arr">›</span>
+      <span class="flow-step">프로젝터 전체 공개 (발표용)</span>
+    </div>
+
+  </div><!-- /page -->
+
+</body>
+
+</html>

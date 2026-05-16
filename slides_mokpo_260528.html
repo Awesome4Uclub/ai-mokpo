@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 전문가 특강 · 목포공업고 · 2026.05.28-29</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:   #0d0d0d;
+      --bg2:  #141414;
+      --bg3:  #1c1c1c;
+      --text: #f0f0f0;
+      --dim:  rgba(255,255,255,0.45);
+      --muted:rgba(255,255,255,0.22);
+      --faint:rgba(255,255,255,0.07);
+      --line: rgba(255,255,255,0.08);
+    }
+
+    html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--text);
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif; user-select: none; }
+
+    /* ── Progress bar ── */
+    #prog { position: fixed; top: 0; left: 0; height: 3px; background: rgba(255,255,255,0.7); transition: width .3s; z-index: 200; }
+
+    /* ── Slide base ── */
+    .ss { width: 100vw; height: 100vh; position: relative; }
+    .slide {
+      position: absolute; inset: 0;
+      display: none; flex-direction: column;
+      padding: 5vh 6.5vw 7vh;
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .slide.on { display: flex; }
+
+    /* ── Section indicator ── */
+    .si {
+      position: absolute; top: 2.2vh; left: 6.5vw;
+      font-size: clamp(9px,.75vw,12px); font-weight: 700;
+      color: var(--muted); letter-spacing: .12em; text-transform: uppercase;
+    }
+
+    /* ── Cover ── */
+    .s-cover {
+      align-items: center; justify-content: center; text-align: center; gap: 1.8vh;
+    }
+    .cov-badges { display: flex; gap: 1vw; flex-wrap: wrap; justify-content: center; }
+    .cbadge {
+      font-size: clamp(10px,.9vw,14px); padding: .35vh .9vw; border-radius: 20px;
+      background: var(--faint); color: var(--dim); font-weight: 600; letter-spacing: .05em;
+    }
+    .cov-title {
+      font-size: clamp(36px,6vw,90px); font-weight: 900; letter-spacing: -.03em; color: #fff; line-height: 1.05;
+    }
+    .cov-sub {
+      font-size: clamp(16px,2.2vw,34px); color: var(--dim); letter-spacing: .04em; font-weight: 400;
+    }
+    .cov-date { font-size: clamp(11px,1vw,15px); color: var(--muted); margin-top: 1.5vh; }
+
+    /* ── Section header ── */
+    .s-section {
+      align-items: flex-start; justify-content: center; gap: .8vh;
+    }
+    .sec-big {
+      font-size: clamp(80px,14vw,200px); font-weight: 900; color: rgba(255,255,255,.04);
+      letter-spacing: -.05em; line-height: 1; margin-bottom: -.5vh; margin-left: -.5vw;
+    }
+    .sec-lbl {
+      font-size: clamp(10px,1vw,14px); font-weight: 700; letter-spacing: .2em;
+      color: var(--muted); text-transform: uppercase; margin-bottom: .8vh;
+    }
+    .sec-title {
+      font-size: clamp(28px,4.8vw,68px); font-weight: 900; color: #fff;
+      letter-spacing: -.02em; line-height: 1.1;
+    }
+    .sec-sub { font-size: clamp(13px,1.4vw,20px); color: var(--dim); margin-top: .5vh; }
+    .sec-dur {
+      display: inline-block; margin-top: 2vh;
+      font-size: clamp(12px,1.1vw,17px); padding: .5vh 1.4vw;
+      border-radius: 30px; background: var(--faint);
+      border: 1px solid var(--line); color: var(--dim); font-weight: 700;
+    }
+
+    /* ── Content slide ── */
+    .s-content { align-items: flex-start; justify-content: flex-start; gap: 2.5vh; }
+    .s-head {
+      width: 100%; display: flex; align-items: flex-end; justify-content: space-between;
+      border-bottom: 1px solid var(--line); padding-bottom: 1.5vh;
+    }
+    .s-title {
+      font-size: clamp(20px,3vw,46px); font-weight: 900; color: #fff; letter-spacing: -.02em;
+    }
+    .s-tag {
+      font-size: clamp(9px,.85vw,13px); padding: .3vh .9vw; border-radius: 20px;
+      background: var(--faint); border: 1px solid var(--line); color: var(--muted);
+      font-weight: 700; white-space: nowrap; margin-bottom: .3vh;
+    }
+    .s-body { width: 100%; flex: 1; display: flex; flex-direction: column; gap: 1.2vh; overflow: hidden; }
+
+    /* ── Grid ── */
+    .g2 { display: grid; grid-template-columns: 1fr 1fr;   gap: 1vw; }
+    .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1vw; }
+    .g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: .8vw; }
+    .g5 { display: grid; grid-template-columns: repeat(5,1fr); gap: .7vw; }
+    .g6 { display: grid; grid-template-columns: repeat(3,1fr); gap: .8vw; }
+
+    .card {
+      background: var(--faint); border: 1px solid var(--line);
+      border-radius: .6vw; padding: 1.6vh 1.4vw;
+      display: flex; flex-direction: column; gap: .6vh;
+    }
+    .card.hi { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.18); }
+    .c-icon { font-size: clamp(16px,2vw,30px); line-height: 1; }
+    .c-name { font-size: clamp(12px,1.4vw,21px); font-weight: 800; color: #fff; }
+    .c-desc { font-size: clamp(9px,.9vw,13px); color: var(--dim); line-height: 1.5; }
+    .c-tools { display: flex; flex-wrap: wrap; gap: .3vw; margin-top: .3vh; }
+    .c-tool {
+      font-size: clamp(8px,.7vw,11px); padding: .2vh .6vw; border-radius: 20px;
+      background: rgba(255,255,255,.1); color: rgba(255,255,255,.6); font-weight: 600;
+    }
+
+    /* ── Flow ── */
+    .flow { display: flex; align-items: stretch; gap: .6vw; width: 100%; }
+    .f-step {
+      flex: 1; background: var(--faint); border: 1px solid var(--line);
+      border-radius: .6vw; padding: 1.4vh .9vw;
+      display: flex; flex-direction: column; align-items: center; text-align: center; gap: .5vh;
+    }
+    .f-icon { font-size: clamp(14px,1.8vw,28px); }
+    .f-name { font-size: clamp(10px,1.1vw,17px); font-weight: 800; color: #fff; }
+    .f-tool { font-size: clamp(8px,.75vw,11px); color: var(--muted); line-height: 1.4; }
+    .f-arr  { font-size: clamp(14px,1.6vw,24px); color: var(--muted); align-self: center; flex-shrink: 0; }
+
+    /* ── Steps ── */
+    .steps { display: flex; flex-direction: column; gap: .7vh; }
+    .step {
+      display: flex; align-items: flex-start; gap: 1.2vw;
+      padding: 1vh 1.4vw; background: var(--faint);
+      border-radius: .5vw; border: 1px solid var(--line);
+    }
+    .step-n { font-size: clamp(11px,1.1vw,16px); font-weight: 900; color: var(--muted); flex-shrink: 0; min-width: 2.5vw; margin-top: .1vh; }
+    .step-t { font-size: clamp(11px,1.25vw,19px); color: rgba(255,255,255,.8); line-height: 1.45; }
+    .step-t b { color: #fff; }
+
+    /* ── Bullets ── */
+    .blist { list-style: none; display: flex; flex-direction: column; gap: .9vh; }
+    .blist li {
+      font-size: clamp(12px,1.4vw,21px); color: rgba(255,255,255,.8);
+      padding-left: 1.4vw; position: relative; line-height: 1.5;
+    }
+    .blist li::before { content: '›'; position: absolute; left: .2vw; color: var(--muted); font-size: 1.1em; }
+    .blist li b { color: #fff; }
+    .blist li small { font-size: .8em; color: var(--muted); }
+
+    /* ── Quote ── */
+    .quote {
+      font-size: clamp(16px,2.2vw,33px); color: rgba(255,255,255,.85);
+      font-style: italic; line-height: 1.65;
+      border-left: 3px solid rgba(255,255,255,.25);
+      padding-left: 2vw; max-width: 85%;
+    }
+    .q-credit { font-size: clamp(10px,1vw,15px); color: var(--muted); margin-top: 1.5vh; }
+
+    /* ── Road map horizontal ── */
+    .rmap { display: flex; align-items: center; gap: .5vw; width: 100%; }
+    .rm-step {
+      flex: 1; background: var(--faint); border: 1px solid var(--line);
+      border-radius: .5vw; padding: 1.2vh .8vw;
+      display: flex; flex-direction: column; align-items: center; text-align: center; gap: .4vh;
+    }
+    .rm-n {
+      width: clamp(22px,2.2vw,34px); height: clamp(22px,2.2vw,34px);
+      border-radius: 50%; background: rgba(255,255,255,.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: clamp(9px,.9vw,14px); font-weight: 900; color: #fff;
+    }
+    .rm-t { font-size: clamp(9px,1vw,15px); font-weight: 800; color: #fff; }
+    .rm-d { font-size: clamp(7px,.7vw,11px); color: var(--dim); line-height: 1.4; }
+    .rm-arr { font-size: clamp(12px,1.3vw,20px); color: var(--muted); flex-shrink: 0; }
+
+    /* ── Activity callout ── */
+    .s-activity {
+      align-items: center; justify-content: center;
+    }
+    .act-box {
+      display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2vh;
+      background: var(--faint); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 1.2vw; padding: 4.5vh 4vw; width: 100%; max-width: 80vw;
+    }
+    .act-icon  { font-size: clamp(36px,6vw,80px); }
+    .act-title { font-size: clamp(22px,3.8vw,56px); font-weight: 900; color: #fff; letter-spacing: -.02em; }
+    .act-dur   {
+      display: inline-block; font-size: clamp(12px,1.3vw,19px); padding: .5vh 1.5vw;
+      border-radius: 30px; background: rgba(255,255,255,.12); color: var(--dim); font-weight: 700;
+    }
+    .act-list { list-style: none; width: 100%; max-width: 52vw; }
+    .act-list li {
+      font-size: clamp(11px,1.2vw,18px); color: var(--dim);
+      padding: .7vh 0; border-bottom: 1px solid var(--line);
+      display: flex; gap: 1vw; text-align: left;
+    }
+    .act-list li:last-child { border-bottom: none; }
+    .act-list li b { color: rgba(255,255,255,.85); }
+    .act-sub { font-size: clamp(11px,1.1vw,16px); color: var(--muted); }
+
+    /* ── Break ── */
+    .s-break { align-items: center; justify-content: center; text-align: center; gap: 1.5vh; }
+    .brk-icon  { font-size: clamp(52px,9vw,120px); }
+    .brk-title { font-size: clamp(40px,7vw,100px); font-weight: 900; color: #fff; }
+    .brk-sub   { font-size: clamp(14px,1.6vw,24px); color: var(--muted); }
+    .brk-tips  { display: flex; gap: 1.2vw; flex-wrap: wrap; justify-content: center; margin-top: 2vh; }
+    .brk-tip   { font-size: clamp(11px,1.1vw,16px); padding: .6vh 1.2vw; border-radius: 30px; background: var(--faint); border: 1px solid var(--line); color: var(--dim); }
+
+    /* ── QR placeholder ── */
+    .qr-wrap { display: flex; flex-direction: column; align-items: center; gap: 1vh; }
+    .qr-box  {
+      width: clamp(120px,16vw,220px); height: clamp(120px,16vw,220px);
+      background: #fff; border-radius: .8vw;
+      display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px;
+    }
+    .qr-box .qr-ico { font-size: clamp(32px,5vw,60px); }
+    .qr-box .qr-lbl { font-size: clamp(9px,.9vw,12px); color: #555; font-weight: 700; text-align: center; }
+    .qr-caption { font-size: clamp(10px,1vw,14px); color: var(--muted); }
+
+    /* ── Final ── */
+    .s-final { align-items: center; justify-content: center; text-align: center; gap: 2.5vh; }
+    .fin-quote {
+      font-size: clamp(15px,2.1vw,32px); color: rgba(255,255,255,.82);
+      line-height: 1.7; max-width: 75%;
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      padding: 3vh 0;
+    }
+    .fin-sub   { font-size: clamp(18px,2.8vw,42px); font-weight: 900; color: #fff; letter-spacing: -.02em; }
+    .fin-credit { font-size: clamp(10px,.9vw,14px); color: var(--muted); }
+
+    /* ── Eval grid ── */
+    .eval-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1vw; }
+    .eval-card {
+      background: var(--faint); border: 1px solid var(--line); border-radius: .6vw;
+      padding: 1.8vh 1.6vw; display: flex; flex-direction: column; gap: .5vh;
+    }
+    .eval-badge {
+      display: inline-block; font-size: clamp(8px,.75vw,12px); font-weight: 700;
+      padding: .2vh .7vw; border-radius: 4px; background: rgba(255,255,255,.12); color: var(--dim);
+      width: fit-content;
+    }
+    .eval-badge.core { background: rgba(255,255,255,.2); color: #fff; }
+    .eval-name { font-size: clamp(14px,1.7vw,26px); font-weight: 900; color: #fff; }
+    .eval-desc { font-size: clamp(10px,.95vw,14px); color: var(--dim); line-height: 1.5; }
+
+    /* ── Mini badge ── */
+    .mbadge {
+      display: inline-block; font-size: clamp(9px,.8vw,12px); padding: .3vh .8vw;
+      border-radius: 4px; background: rgba(255,255,255,.1); color: var(--dim);
+      font-weight: 700; margin-left: .5vw; vertical-align: middle;
+    }
+
+    /* ── Cols layout ── */
+    .lcols { display: flex; gap: 2vw; width: 100%; flex: 1; }
+    .lcols > div { flex: 1; display: flex; flex-direction: column; gap: 1vh; }
+    .col-title {
+      font-size: clamp(11px,1.2vw,18px); font-weight: 800; color: var(--dim);
+      letter-spacing: .05em; border-bottom: 1px solid var(--line); padding-bottom: .8vh;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed; bottom: 16px; right: 20px;
+      display: flex; align-items: center; gap: 8px; z-index: 100;
+    }
+    .nbtn {
+      width: 34px; height: 34px; border-radius: 6px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.5); font-size: 14px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .15s; font-family: inherit;
+    }
+    .nbtn:hover { background: rgba(255,255,255,.14); color: #fff; }
+    .nbtn:disabled { opacity: .25; pointer-events: none; }
+    .ncnt { font-size: 12px; color: rgba(255,255,255,.28); min-width: 38px; text-align: center; }
+    .kbhint { position: fixed; bottom: 16px; left: 20px; font-size: 10px; color: rgba(255,255,255,.14); }
+    .k { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: 3px; padding: 1px 5px; }
+  </style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<div class="ss" id="ss">
+
+  <!-- ══════════════════════ SLIDE 1 · Cover ══════════════════════ -->
+  <div class="slide s-cover on" data-n="1">
+    <div class="cov-badges">
+      <span class="cbadge">목포공업고등학교</span>
+      <span class="cbadge">2026.05.28 (수) · 05.29 (목)</span>
+      <span class="cbadge">AI 전문가 특강</span>
+    </div>
+    <div class="cov-title">바이브 코딩 ×<br>AI 숏폼 제작</div>
+    <div class="cov-sub">코드 한 줄 없이 AI로 영상을 만드는 120분</div>
+    <div class="cov-date">5인 팀 협업 · 스마트폰 한 대 · 결과물: 완성된 AI 숏폼 영상</div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 2 · Agenda ══════════════════════ -->
+  <div class="slide s-content" data-n="2">
+    <div class="s-head">
+      <div class="s-title">오늘의 120분</div>
+      <div class="s-tag">수업 개요</div>
+    </div>
+    <div class="s-body">
+      <div class="g3" style="flex:1">
+        <div class="card hi" style="justify-content:space-between">
+          <div>
+            <div class="c-icon">📖</div>
+            <div class="c-name" style="margin-top:.5vh">1교시</div>
+            <div class="c-desc" style="font-size:clamp(10px,1vw,15px);color:var(--dim);margin-top:.4vh">이론 + 개인 체험</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.4vh;margin-top:1.2vh">
+            <div class="c-tool" style="width:fit-content">⏱ 50분</div>
+            <div style="font-size:clamp(9px,.85vw,13px);color:var(--muted);line-height:1.6">
+              AI 전문가 소개 (10분)<br>
+              바이브 코딩 체험 (20분)<br>
+              AI 숏폼 도구 탐색 (20분)
+            </div>
+          </div>
+        </div>
+        <div class="card" style="align-items:center;justify-content:center;opacity:.5">
+          <div class="c-icon">☕</div>
+          <div class="c-name" style="margin-top:.5vh">쉬는 시간</div>
+          <div class="c-tool" style="margin-top:.4vh">10분</div>
+          <div style="font-size:clamp(9px,.85vw,13px);color:var(--muted);text-align:center;margin-top:.6vh;line-height:1.6">스마트폰 준비<br>배터리 확인<br>역할 생각해두기</div>
+        </div>
+        <div class="card hi" style="justify-content:space-between">
+          <div>
+            <div class="c-icon">🤝</div>
+            <div class="c-name" style="margin-top:.5vh">2교시</div>
+            <div class="c-desc" style="font-size:clamp(10px,1vw,15px);color:var(--dim);margin-top:.4vh">팀 협업 + 발표 + 마무리</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.4vh;margin-top:1.2vh">
+            <div class="c-tool" style="width:fit-content">⏱ 60분</div>
+            <div style="font-size:clamp(9px,.85vw,13px);color:var(--muted);line-height:1.6">
+              공동 기획 (5분)<br>
+              5인 동시 제작 (30분)<br>
+              완성·제출·발표·마무리 (25분)
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:1.4vh 1.8vw;background:var(--faint);border:1px solid var(--line);border-radius:.6vw;text-align:center">
+        <span style="font-size:clamp(13px,1.5vw,22px);font-weight:800;color:#fff">🎯 오늘 결과물 — 5인 팀 AI 숏폼 영상 완성! (Padlet 제출 + 전체 발표)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 3 · Section 1 ══════════════════════ -->
+  <div class="slide s-section" data-n="3">
+    <div class="sec-big">01</div>
+    <div class="sec-lbl">1교시</div>
+    <div class="sec-title">이론 + 개인 체험</div>
+    <div class="sec-sub">AI 전문가 소개 · 바이브 코딩 · AI 숏폼 도구 탐색</div>
+    <div class="sec-dur">⏱ 50분</div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 4 · AI 직군 6종 ══════════════════════ -->
+  <div class="slide s-content" data-n="4">
+    <div class="si">1교시 · AI 전문가란?</div>
+    <div class="s-head">
+      <div class="s-title">AI 관련 6대 직군</div>
+      <div class="s-tag">10분 · 오프닝</div>
+    </div>
+    <div class="s-body">
+      <div class="g3" style="flex:1">
+        <div class="card"><div class="c-icon">🔬</div><div class="c-name">AI 연구원</div><div class="c-desc">새 알고리즘 개발 · 논문 발표<br>학계 + 빅테크 연구소</div></div>
+        <div class="card"><div class="c-icon">⚙️</div><div class="c-name">ML 엔지니어</div><div class="c-desc">모델 설계 · 학습 · 배포<br>AI 서비스 핵심 개발자</div></div>
+        <div class="card"><div class="c-icon">📊</div><div class="c-name">데이터 엔지니어</div><div class="c-desc">데이터 수집 · 정제 · 파이프라인<br>AI의 원재료 담당</div></div>
+        <div class="card"><div class="c-icon">🛠</div><div class="c-name">MLOps 엔지니어</div><div class="c-desc">AI 시스템 운영 · 최적화<br>모델을 안정적으로 서비스</div></div>
+        <div class="card"><div class="c-icon">💡</div><div class="c-name">AI 제품 PM</div><div class="c-desc">AI 서비스 기획 · 관리<br>비즈니스 + 기술 연결</div></div>
+        <div class="card"><div class="c-icon">🤖</div><div class="c-name">로봇 SW 엔지니어</div><div class="c-desc">AI + 로봇 통합 개발<br>제조·물류·의료 로봇</div></div>
+      </div>
+      <div style="padding:1vh 1.5vw;background:var(--faint);border:1px solid var(--line);border-radius:.5vw">
+        <span style="font-size:clamp(10px,1.1vw,16px);color:var(--dim)">💬 어떤 직군이 가장 나에게 맞을 것 같나요? — 지금 생각해보세요!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 5 · 전공 × AI ══════════════════════ -->
+  <div class="slide s-content" data-n="5">
+    <div class="si">1교시 · AI 전문가란?</div>
+    <div class="s-head">
+      <div class="s-title">여러분의 전공 × AI = 최고의 조합</div>
+      <div class="s-tag">10분</div>
+    </div>
+    <div class="s-body">
+      <div class="g3" style="flex:1">
+        <div class="card"><div class="c-icon">⚙️</div><div class="c-name">기계·금속</div><div class="c-desc">AI 품질검사 · 예측 유지보수<br>스마트 공장 자동화 로봇</div></div>
+        <div class="card"><div class="c-icon">⚡</div><div class="c-name">전기·전자</div><div class="c-desc">AI 회로 설계 보조 · IoT 제어<br>스마트 그리드 최적화</div></div>
+        <div class="card"><div class="c-icon">🚗</div><div class="c-name">자동차</div><div class="c-desc">자율주행 AI · 결함 자동 진단<br>운전자 보조 시스템(ADAS)</div></div>
+        <div class="card"><div class="c-icon">🏗️</div><div class="c-name">건축·토목</div><div class="c-desc">드론+AI 측량 · 구조 안전 점검<br>BIM 설계 자동화</div></div>
+        <div class="card"><div class="c-icon">🔬</div><div class="c-name">화학·신소재</div><div class="c-desc">AI 신소재 발견 · 공정 최적화<br>불량률 예측 시스템</div></div>
+        <div class="card"><div class="c-icon">🦾</div><div class="c-name">로봇</div><div class="c-desc">AI 비전 · 협동 로봇(코봇)<br>물류 자동화 로봇 팔</div></div>
+      </div>
+      <div style="padding:1vh 1.5vw;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);border-radius:.5vw;text-align:center">
+        <span style="font-size:clamp(11px,1.3vw,19px);font-weight:800;color:#fff">여러분의 전공 지식 + AI 활용 능력 = 현장에서 가장 필요한 인재</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 6 · 3대 역량 + 로드맵 ══════════════════════ -->
+  <div class="slide s-content" data-n="6">
+    <div class="si">1교시 · AI 전문가란?</div>
+    <div class="s-head">
+      <div class="s-title">AI 전문가 3대 핵심 역량 & 커리어 로드맵</div>
+      <div class="s-tag">10분</div>
+    </div>
+    <div class="s-body">
+      <div class="g3">
+        <div class="card hi"><div class="c-icon">💡</div><div class="c-name">창의력</div><div class="c-desc">문제 발견력 · 아이디어 구체화<br>AI 활용 기획력<br><span style="color:rgba(255,255,255,.55);font-size:clamp(8px,.75vw,11px)">오늘 숏폼 제작이 바로 이 역량!</span></div></div>
+        <div class="card hi"><div class="c-icon">📐</div><div class="c-name">수학·통계</div><div class="c-desc">AI 알고리즘의 언어<br>선형대수 · 확률·통계<br><span style="color:rgba(255,255,255,.55);font-size:clamp(8px,.75vw,11px)">중·고 수학이 직접 연결됨!</span></div></div>
+        <div class="card hi"><div class="c-icon">💻</div><div class="c-name">프로그래밍</div><div class="c-desc">Python · AI 프레임워크<br>데이터 분석<br><span style="color:rgba(255,255,255,.55);font-size:clamp(8px,.75vw,11px)">오늘 바이브 코딩으로 첫 경험!</span></div></div>
+      </div>
+      <div class="rmap" style="flex:1;align-items:stretch">
+        <div class="rm-step"><div class="rm-n" style="background:rgba(255,255,255,.15)">1</div><div class="rm-t">Python 기초</div><div class="rm-d">변수·반복·함수<br>유튜브 무료 학습</div></div>
+        <div class="rm-arr">›</div>
+        <div class="rm-step"><div class="rm-n" style="background:rgba(255,255,255,.2)">2</div><div class="rm-t">ML 라이브러리</div><div class="rm-d">pandas · numpy<br>scikit-learn</div></div>
+        <div class="rm-arr">›</div>
+        <div class="rm-step"><div class="rm-n" style="background:rgba(255,255,255,.28)">3</div><div class="rm-t">딥러닝 프레임워크</div><div class="rm-d">PyTorch<br>TensorFlow</div></div>
+        <div class="rm-arr">›</div>
+        <div class="rm-step"><div class="rm-n" style="background:rgba(255,255,255,.36)">4</div><div class="rm-t">전공 분야 연계</div><div class="rm-d">기계 CV / 전기 IoT<br>자동차 자율주행</div></div>
+        <div class="rm-arr">›</div>
+        <div class="rm-step hi"><div class="rm-n" style="background:rgba(255,255,255,.6);color:#000">5</div><div class="rm-t" style="color:#fff">현업 AI 엔지니어</div><div class="rm-d" style="color:var(--dim)">포트폴리오<br>취업·창업</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 7 · 바이브 코딩이란? ══════════════════════ -->
+  <div class="slide s-content" data-n="7">
+    <div class="si">1교시 · 바이브 코딩</div>
+    <div class="s-head">
+      <div class="s-title">바이브 코딩 (Vibe Coding) 이란?</div>
+      <div class="s-tag">20분 · 이론·실습</div>
+    </div>
+    <div class="s-body" style="justify-content:center;gap:3vh">
+      <div class="quote">
+        코딩 지식 없이도 <b style="color:#fff">AI에게 자연어로 원하는 것을 설명</b>하면<br>
+        AI가 코드를 작성해주는 <b style="color:#fff">새로운 개발 방식</b>.<br>
+        아이디어만 있으면 누구나 웹사이트 · 앱 · 도구를 만들 수 있는 시대가 열렸습니다.
+      </div>
+      <div class="q-credit">💡 2025년 Andrej Karpathy (OpenAI 공동창업자) 정의 · 현재 전 세계 개발자 표준 워크플로로 확산</div>
+      <div class="g3">
+        <div class="card"><div class="c-icon">🌐</div><div class="c-name">웹 프로그램</div><div class="c-desc">HTML · CSS · JS · React<br>▶ 오늘의 AI 프로필 카드</div></div>
+        <div class="card"><div class="c-icon">💻</div><div class="c-name">윈도우 프로그램</div><div class="c-desc">Python · C# · Electron<br>▶ 데스크탑 앱·도구</div></div>
+        <div class="card"><div class="c-icon">📱</div><div class="c-name">앱 프로그램</div><div class="c-desc">React Native · Flutter<br>▶ iOS · Android 앱</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 8 · 개발 도구 & 8단계 로드맵 ══════════════════════ -->
+  <div class="slide s-content" data-n="8">
+    <div class="si">1교시 · 바이브 코딩</div>
+    <div class="s-head">
+      <div class="s-title">오늘 사용할 도구 & 개발 8단계 로드맵</div>
+      <div class="s-tag">20분</div>
+    </div>
+    <div class="s-body">
+      <div class="g3" style="height:fit-content">
+        <div class="card"><div class="c-icon">📝</div><div class="c-name">Visual Studio Code</div><div class="c-desc">전 세계 1위 코드 에디터 · 무료</div></div>
+        <div class="card hi"><div class="c-icon">🚀</div><div class="c-name">Antigravity <span class="mbadge">추천</span></div><div class="c-desc">VSCode 확장 · 한국어 지원 AI 코딩</div></div>
+        <div class="card"><div class="c-icon">✦</div><div class="c-name">OpenCode / Cursor</div><div class="c-desc">AI 전용 코드 에디터</div></div>
+      </div>
+      <div style="font-size:clamp(10px,.95vw,14px);font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:.5vh">아이디어 → 출시 · 8단계 로드맵</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.7vw;flex:1">
+        <div class="card"><div class="c-icon">📋</div><div class="c-name">01. BRD 작성</div><div class="c-desc">무엇을 왜 만드나</div></div>
+        <div class="card"><div class="c-icon">📄</div><div class="c-name">02. PRD 작성</div><div class="c-desc">기능·화면 상세 명세</div></div>
+        <div class="card"><div class="c-icon">🎨</div><div class="c-name">03. 디자인 변경</div><div class="c-desc">UI · 색상 · 레이아웃</div></div>
+        <div class="card"><div class="c-icon">🔌</div><div class="c-name">04. 기능 연결</div><div class="c-desc">DB · API 통합</div></div>
+        <div class="card"><div class="c-icon">🔍</div><div class="c-name">05. 트러블슈팅</div><div class="c-desc">오류 디버깅 · AI에게 질문</div></div>
+        <div class="card"><div class="c-icon">🔎</div><div class="c-name">06. 코드 리뷰</div><div class="c-desc">AI로 보안·품질 검토</div></div>
+        <div class="card hi"><div class="c-icon">🚀</div><div class="c-name">07. 온라인 배포</div><div class="c-desc">GitHub · Vercel</div></div>
+        <div class="card hi"><div class="c-icon">📦</div><div class="c-name">08. 앱 패키징</div><div class="c-desc">스토어 등록·배포</div></div>
+      </div>
+      <div style="font-size:clamp(9px,.85vw,13px);color:var(--muted)">※ 오늘 실습은 01 → 03 → 05 단계 체험</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 9 · 시연 ══════════════════════ -->
+  <div class="slide s-activity" data-n="9">
+    <div class="si">1교시 · 바이브 코딩</div>
+    <div class="act-box">
+      <div class="act-icon">🎬</div>
+      <div class="act-title">지금부터 바이브 코딩 시연</div>
+      <div class="act-dur">20분 · 개인 체험</div>
+      <ul class="act-list">
+        <li><b>1.</b> AI 프로필 카드 — 자연어 프롬프트로 웹 페이지 제작</li>
+        <li><b>2.</b> 따라하거나 지켜봐도 좋습니다</li>
+        <li><b>3.</b> 완성하면 → URL 복사 → 친구에게 공유해보세요</li>
+      </ul>
+      <div class="act-sub">💡 코딩 몰라도 OK — AI가 다 해줍니다</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 10 · 숏폼 파이프라인 ══════════════════════ -->
+  <div class="slide s-content" data-n="10">
+    <div class="si">1교시 · AI 숏폼 도구 탐색</div>
+    <div class="s-head">
+      <div class="s-title">AI 숏폼 제작 파이프라인</div>
+      <div class="s-tag">20분 · 개인 체험</div>
+    </div>
+    <div class="s-body" style="justify-content:center">
+      <div style="font-size:clamp(11px,1.2vw,18px);color:var(--dim);margin-bottom:1vh">스마트폰 하나로 스크립트 → 목소리 → 배경음악 → 이미지/영상 → 편집 → 완성!</div>
+      <div class="flow">
+        <div class="f-step"><div class="f-icon">✍</div><div class="f-name">스크립트</div><div class="f-tool">ChatGPT<br>Gemini · Claude</div></div>
+        <div class="f-arr">›</div>
+        <div class="f-step"><div class="f-icon">🎤</div><div class="f-name">나래이터</div><div class="f-tool">Typecast AI<br>셀프 녹음</div></div>
+        <div class="f-arr">›</div>
+        <div class="f-step"><div class="f-icon">🎵</div><div class="f-name">배경음악</div><div class="f-tool">Suno AI<br>suno.com</div></div>
+        <div class="f-arr">›</div>
+        <div class="f-step"><div class="f-icon">🖼</div><div class="f-name">이미지·영상</div><div class="f-tool">Gemini · ChatGPT<br>Grok · Flow</div></div>
+        <div class="f-arr">›</div>
+        <div class="f-step hi"><div class="f-icon">✂</div><div class="f-name">CapCut 편집</div><div class="f-tool">자막 · 효과<br>1080p 출력</div></div>
+        <div class="f-arr">›</div>
+        <div class="f-step hi"><div class="f-icon">🎬</div><div class="f-name">완성!</div><div class="f-tool">Padlet 제출<br>팀 발표</div></div>
+      </div>
+      <div style="font-size:clamp(10px,1.1vw,16px);color:var(--muted);margin-top:1.5vh;text-align:center">▶ 2교시에 5명이 각 단계를 나눠서 <b style="color:var(--dim)">동시에</b> 진행합니다 — 30분 안에 완성!</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 11 · 역할별 도구 ══════════════════════ -->
+  <div class="slide s-content" data-n="11">
+    <div class="si">1교시 · AI 숏폼 도구 탐색</div>
+    <div class="s-head">
+      <div class="s-title">역할별 AI 도구 — 지금 미리 체험해보세요</div>
+      <div class="s-tag">20분 · 각 3~4분 탐색</div>
+    </div>
+    <div class="s-body">
+      <div class="g5" style="flex:1">
+        <div class="card"><div class="c-icon">✍</div><div class="c-name">스크립트</div><div class="c-tools"><span class="c-tool">ChatGPT</span><span class="c-tool">Gemini</span><span class="c-tool">Claude</span></div><div class="c-desc" style="margin-top:.5vh">프롬프트로 장면별 대사·화면설명 생성</div></div>
+        <div class="card"><div class="c-icon">🎤</div><div class="c-name">나래이터</div><div class="c-tools"><span class="c-tool">Typecast AI</span></div><div class="c-desc" style="margin-top:.5vh">typecast.ai 접속 → 대사 입력 → AI 목소리</div></div>
+        <div class="card"><div class="c-icon">🎵</div><div class="c-name">배경음악</div><div class="c-tools"><span class="c-tool">Suno AI</span></div><div class="c-desc" style="margin-top:.5vh">suno.com 접속 → 분위기 입력 → AI 작곡</div></div>
+        <div class="card"><div class="c-icon">🖼</div><div class="c-name">이미지·영상</div><div class="c-tools"><span class="c-tool">Gemini</span><span class="c-tool">Grok</span><span class="c-tool">Flow</span></div><div class="c-desc" style="margin-top:.5vh">장면 설명 → 이미지/클립 생성</div></div>
+        <div class="card"><div class="c-icon">✂</div><div class="c-name">편집</div><div class="c-tools"><span class="c-tool">CapCut</span></div><div class="c-desc" style="margin-top:.5vh">클립 배치 · AI 자막 · 1080p 출력</div></div>
+      </div>
+      <div style="padding:1.2vh 1.5vw;background:var(--faint);border:1px solid var(--line);border-radius:.5vw">
+        <span style="font-size:clamp(10px,1.1vw,16px);color:var(--dim)">📌 지금 할 것 — <b style="color:rgba(255,255,255,.8)">맡고 싶은 역할의 도구</b>를 3~4분씩 자유롭게 탐색해보세요. 2교시 팀 구성 때 역할 발표 예정!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 12 · 실습 미션 ══════════════════════ -->
+  <div class="slide s-activity" data-n="12">
+    <div class="si">1교시 · 실습 미션</div>
+    <div class="act-box">
+      <div class="act-icon">🃏</div>
+      <div class="act-title">실습 미션 — 나만의 AI 프로필 카드</div>
+      <div class="act-dur">15분</div>
+      <ul class="act-list">
+        <li><b>1.</b> VS Code + Antigravity(또는 Cursor) 열기</li>
+        <li><b>2.</b> AI에게 프롬프트: <b>"[내 이름], [전공], 좋아하는 것, AI 꿈을 담은 프로필 카드 웹페이지 만들어줘"</b></li>
+        <li><b>3.</b> 마음에 들 때까지 프롬프트로 수정·개선</li>
+        <li><b>4.</b> 완성 → 옆 사람과 공유 🎉</li>
+      </ul>
+      <div class="act-sub">💡 완성 못 해도 괜찮습니다 — AI와 대화하는 경험 자체가 목표!</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 13 · Break ══════════════════════ -->
+  <div class="slide s-break" data-n="13">
+    <div class="brk-icon">☕</div>
+    <div class="brk-title">쉬는 시간</div>
+    <div class="brk-sub">10분 · 0:50 ~ 1:00</div>
+    <div class="brk-tips">
+      <span class="brk-tip">📱 스마트폰 준비 & 충전</span>
+      <span class="brk-tip">🔋 배터리 50%+ 확인</span>
+      <span class="brk-tip">💭 맡고 싶은 역할 생각해두기</span>
+      <span class="brk-tip">📶 Wi-Fi 연결 상태 확인</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 14 · Section 2 ══════════════════════ -->
+  <div class="slide s-section" data-n="14">
+    <div class="sec-big">02</div>
+    <div class="sec-lbl">2교시</div>
+    <div class="sec-title">팀 협업 + 발표 + 마무리</div>
+    <div class="sec-sub">5인 팀 AI 숏폼 완성 · Padlet 제출 · 전체 발표</div>
+    <div class="sec-dur">⏱ 60분</div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 15 · 공동 기획 ══════════════════════ -->
+  <div class="slide s-content" data-n="15">
+    <div class="si">2교시 · 공동 기획</div>
+    <div class="s-head">
+      <div class="s-title">공동 기획 — 팀원 합의</div>
+      <div class="s-tag">⏱ 5분</div>
+    </div>
+    <div class="s-body">
+      <div class="g4" style="flex:1">
+        <div class="card hi"><div class="c-icon">🎯</div><div class="c-name">STEP 1<br>주제 결정</div><div class="c-desc">팀원 투표<br>우리 전공 × AI 교차점 선택</div></div>
+        <div class="card hi"><div class="c-icon">🎬</div><div class="c-name">STEP 2<br>콘티 짜기</div><div class="c-desc">장면 수 · 흐름 · 분위기<br>스마트폰 메모장에 메모</div></div>
+        <div class="card hi"><div class="c-icon">🤝</div><div class="c-name">STEP 3<br>역할 분담</div><div class="c-desc">5개 역할 자율 배분<br>희망 역할 우선 배정</div></div>
+        <div class="card hi"><div class="c-icon">💬</div><div class="c-name">STEP 4<br>단톡방 개설</div><div class="c-desc">카카오 그룹채팅 개설<br>소스 파일 공유용</div></div>
+      </div>
+      <div style="padding:1.2vh 1.5vw;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);border-radius:.5vw">
+        <span style="font-size:clamp(10px,1.1vw,16px)">🏃 <b style="color:#fff">5분 안에 반드시 완료!</b> — 주제·역할·단톡방 세 가지만 정하면 즉시 제작 시작</span>
+      </div>
+      <div style="font-size:clamp(10px,1.1vw,16px);color:var(--dim)">💡 추천 주제: ① AI가 내 전공을 어떻게 바꾸는가  ② AI 도구로 공부·취업 준비  ③ 일상 속 AI 경험  ④ 내가 하고 싶은 AI 직업</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 16 · 역할 분담 ══════════════════════ -->
+  <div class="slide s-content" data-n="16">
+    <div class="si">2교시 · 5인 동시 제작</div>
+    <div class="s-head">
+      <div class="s-title">5인 역할 분담 — 동시 제작</div>
+      <div class="s-tag">⏱ 30분 · 팀 프로젝트</div>
+    </div>
+    <div class="s-body">
+      <div style="display:flex;flex-direction:column;gap:.8vh;flex:1">
+        <div class="step"><div class="step-n">✍ 1</div><div class="step-t"><b>스크립트 담당</b> — ChatGPT / Gemini / Claude 앱으로 장면별 대사·화면설명 생성 → 단톡방 공유</div></div>
+        <div class="step"><div class="step-n">🎤 2</div><div class="step-t"><b>나래이터 담당</b> — typecast.ai 접속 → 스크립트 대사 입력 → AI 목소리 MP3 → 단톡방 전송</div></div>
+        <div class="step"><div class="step-n">🎵 3</div><div class="step-t"><b>배경음악 담당</b> — suno.com 접속 → 분위기 프롬프트 입력 → AI 음악 생성 → MP3 → 단톡방 전송</div></div>
+        <div class="step"><div class="step-n">🖼 4</div><div class="step-t"><b>이미지·영상 담당</b> — Gemini앱 / ChatGPT앱으로 장면 이미지 생성 → 갤러리 저장 → 단톡방 전송</div></div>
+        <div class="step"><div class="step-n">✂ 5</div><div class="step-t"><b>편집 담당</b> — 단톡방 소스 파일 수신 → CapCut 새 프로젝트 → 클립 배치 → 오디오 · 자막 → 1080p 출력</div></div>
+      </div>
+      <div style="padding:1vh 1.5vw;background:var(--faint);border:1px solid var(--line);border-radius:.5vw;font-size:clamp(9px,.9vw,13px);color:var(--muted)">
+        💡 파일 전송 시 <b style="color:var(--dim)">"원본 화질"</b> 선택 · 편집 담당 배터리 50%+ 필수 · Wi-Fi 끊기면 핫스팟 ON
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 17 · 제작 시작 ══════════════════════ -->
+  <div class="slide s-activity" data-n="17">
+    <div class="act-box">
+      <div class="act-icon">⚡</div>
+      <div class="act-title">30분 동시 제작 시작!</div>
+      <div class="act-dur">30분 · 1:05 ~ 1:35</div>
+      <ul class="act-list">
+        <li><b>✍ 스크립트</b> → AI 앱 열고 프롬프트 입력 시작</li>
+        <li><b>🎤 나래이터</b> → typecast.ai 접속 (스크립트 오면 바로 작업)</li>
+        <li><b>🎵 배경음악</b> → suno.com 접속 → 분위기 음악 생성</li>
+        <li><b>🖼 이미지·영상</b> → Gemini/ChatGPT 앱으로 이미지 생성</li>
+        <li><b>✂ 편집</b> → CapCut 새 프로젝트 준비 (파일 오는 즉시 작업)</li>
+      </ul>
+      <div class="act-sub">⏰ 1:35까지 CapCut 완성 → 단톡방 공유</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 18 · Padlet 제출 ══════════════════════ -->
+  <div class="slide s-content" data-n="18">
+    <div class="si">2교시 · 완성 & 제출</div>
+    <div class="s-head">
+      <div class="s-title">완성 & Padlet 제출</div>
+      <div class="s-tag">⏱ 5분 · 1:35 ~ 1:40</div>
+    </div>
+    <div class="s-body" style="flex-direction:row;gap:3vw;align-items:center">
+      <div class="flow" style="flex-direction:column;flex:2;gap:1vh">
+        <div class="f-step" style="flex-direction:row;justify-content:flex-start;gap:1.5vw;text-align:left"><div class="f-icon">✂</div><div><div class="f-name">CapCut 1080p 내보내기</div><div class="f-tool" style="text-align:left">편집 완료 → 내보내기 → 1080p 설정</div></div></div>
+        <div class="f-arr" style="align-self:center;transform:rotate(90deg)">›</div>
+        <div class="f-step" style="flex-direction:row;justify-content:flex-start;gap:1.5vw;text-align:left"><div class="f-icon">📱</div><div><div class="f-name">Padlet QR 스캔</div><div class="f-tool" style="text-align:left">프로젝터 화면의 QR 코드 → 스마트폰으로 스캔</div></div></div>
+        <div class="f-arr" style="align-self:center;transform:rotate(90deg)">›</div>
+        <div class="f-step" style="flex-direction:row;justify-content:flex-start;gap:1.5vw;text-align:left"><div class="f-icon">⬆</div><div><div class="f-name">영상 업로드</div><div class="f-tool" style="text-align:left">MP4 파일 선택 → 업로드</div></div></div>
+        <div class="f-arr" style="align-self:center;transform:rotate(90deg)">›</div>
+        <div class="f-step hi" style="flex-direction:row;justify-content:flex-start;gap:1.5vw;text-align:left"><div class="f-icon">🏷</div><div><div class="f-name">팀명 · 주제 입력 → 제출!</div><div class="f-tool" style="text-align:left">프로젝터 전체 공개 (발표 + 강사 다운로드)</div></div></div>
+      </div>
+      <div class="qr-wrap" style="flex:1">
+        <div class="qr-box">
+          <div class="qr-ico">📲</div>
+          <div class="qr-lbl">Padlet QR<br>(강사가 여기에<br>QR 삽입)</div>
+        </div>
+        <div class="qr-caption">스마트폰 카메라로 스캔</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 19 · 팀 발표 ══════════════════════ -->
+  <div class="slide s-content" data-n="19">
+    <div class="si">2교시 · 팀 발표</div>
+    <div class="s-head">
+      <div class="s-title">팀 발표 & 강사 피드백</div>
+      <div class="s-tag">⏱ 15분 · 1:40 ~ 1:55</div>
+    </div>
+    <div class="s-body">
+      <div class="g2" style="flex:1">
+        <div style="display:flex;flex-direction:column;gap:1vh">
+          <div style="font-size:clamp(10px,1vw,15px);font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase">발표 형식</div>
+          <div class="steps">
+            <div class="step"><div class="step-n">📽</div><div class="step-t"><b>영상 상영</b> — Padlet 게시물 클릭 → 전체 화면 재생 (팀당 최대 1분)</div></div>
+            <div class="step"><div class="step-n">🎤</div><div class="step-t"><b>팀 소개 (2~3분)</b> — 발표 담당 1명 (팀원 모두 나와도 OK)</div></div>
+          </div>
+          <div style="font-size:clamp(10px,1vw,15px);font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:1vh">발표 내용 (4가지)</div>
+          <ul class="blist">
+            <li>① 선택한 주제와 이유</li>
+            <li>② 사용한 AI 도구</li>
+            <li>③ 가장 어려웠던 점</li>
+            <li>④ 오늘 배운 것 — 한 줄 요약</li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1vh">
+          <div style="font-size:clamp(10px,1vw,15px);font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase">피드백 원칙</div>
+          <div style="background:var(--faint);border:1px solid var(--line);border-radius:.6vw;padding:1.5vh 1.4vw;flex:1">
+            <div style="font-size:clamp(11px,1.2vw,18px);color:rgba(255,255,255,.8);line-height:1.7">
+              잘한 점 먼저,<br>개선점은 나중에.<br><br>
+              <b style="color:#fff">결과물 완성도보다<br>AI를 써봤다는 과정이 더 중요합니다.</b><br><br>
+              완성이 안 됐어도 괜찮습니다 —<br>어떤 AI 도구를 왜 썼는지<br>설명할 수 있으면 충분합니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 20 · 평가 기준 ══════════════════════ -->
+  <div class="slide s-content" data-n="20">
+    <div class="si">2교시 · 팀 발표</div>
+    <div class="s-head">
+      <div class="s-title">결과물 평가 포인트</div>
+      <div class="s-tag">15분 · 발표</div>
+    </div>
+    <div class="s-body">
+      <div class="eval-grid" style="flex:1">
+        <div class="eval-card">
+          <span class="eval-badge core">핵심 평가</span>
+          <div class="eval-name">💡 창의성</div>
+          <div class="eval-desc">주제가 독창적인가?<br>AI를 창의적으로 활용했는가?<br>새로운 방식으로 문제를 접근했는가?</div>
+        </div>
+        <div class="eval-card">
+          <span class="eval-badge core">핵심 평가</span>
+          <div class="eval-name">🤝 협업</div>
+          <div class="eval-desc">5명이 고르게 참여했는가?<br>역할 분담이 잘 이뤄졌는가?<br>팀원이 서로 도왔는가?</div>
+        </div>
+        <div class="eval-card">
+          <span class="eval-badge">보조 평가</span>
+          <div class="eval-name">⭐ 완성도</div>
+          <div class="eval-desc">영상이 완성되었는가?<br>자막·음악이 어울리는가?<br>45~180초 내 전달력</div>
+        </div>
+        <div class="eval-card">
+          <span class="eval-badge">보조 평가</span>
+          <div class="eval-name">🎤 발표</div>
+          <div class="eval-desc">제작 과정을 잘 설명했는가?<br>배운 점을 말할 수 있는가?<br>AI 활용 경험을 공유했는가?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 21 · 설문 QR ══════════════════════ -->
+  <div class="slide s-content" data-n="21">
+    <div class="si">2교시 · QR & 마무리</div>
+    <div class="s-head">
+      <div class="s-title">만족도 설문 & Padlet 최종 확인</div>
+      <div class="s-tag">⏱ 5분 · 1:55 ~ 2:00</div>
+    </div>
+    <div class="s-body" style="flex-direction:row;gap:3vw;align-items:flex-start">
+      <div style="flex:1;display:flex;flex-direction:column;gap:1.2vh">
+        <div style="font-size:clamp(10px,1vw,15px);font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase">설문 (2분)</div>
+        <ul class="blist">
+          <li>오늘 수업 <b>만족도</b></li>
+          <li><b>가장 좋았던 실습</b> — 무엇이 재미있었나요?</li>
+          <li><b>다음에 배우고 싶은 것</b></li>
+        </ul>
+        <div style="font-size:clamp(10px,1vw,15px);font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:1vh">Padlet 최종 확인 (1분)</div>
+        <div style="font-size:clamp(11px,1.1vw,17px);color:rgba(255,255,255,.7);line-height:1.6">강사 화면에서 전 팀 제출 확인<br>미제출 팀 즉시 업로드</div>
+      </div>
+      <div class="qr-wrap" style="flex:1;align-items:center">
+        <div class="qr-box" style="width:clamp(130px,19vw,240px);height:clamp(130px,19vw,240px)">
+          <div class="qr-ico">📊</div>
+          <div class="qr-lbl">만족도 설문<br>QR 코드<br>(강사 삽입)</div>
+        </div>
+        <div class="qr-caption">스마트폰 카메라로 스캔해주세요</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SLIDE 22 · Final ══════════════════════ -->
+  <div class="slide s-final" data-n="22">
+    <div style="font-size:clamp(28px,4vw,56px);font-weight:900;color:rgba(255,255,255,.12);letter-spacing:-.02em;margin-bottom:-1vh">목포공업고등학교</div>
+    <div class="fin-quote">
+      여러분은 오늘 AI로 코드를 짜고, 영상을 만들었습니다.<br>
+      이미 인공지능 전문가의 <b style="color:#fff">첫 발</b>을 내딛은 겁니다.<br><br>
+      앞으로 여러분의 전공에 AI를 더하면<br>
+      <b style="color:#fff">최고의 전문가</b>가 됩니다.
+    </div>
+    <div class="fin-sub">당신의 내일을 응원합니다 🎉</div>
+    <div class="fin-credit">AI 전문가 특강 · 목포공업고등학교 · 2026.05.28-29</div>
+  </div>
+
+</div><!-- /ss -->
+
+<!-- Nav -->
+<div class="nav">
+  <button class="nbtn" id="bPrev" onclick="go(-1)">←</button>
+  <span class="ncnt" id="cnt">1 / 22</span>
+  <button class="nbtn" id="bNext" onclick="go(1)">→</button>
+</div>
+<div class="kbhint"><span class="k">←</span><span class="k">→</span> 이동 &nbsp; <span class="k">Space</span> 다음 &nbsp; <span class="k">F</span> 전체화면</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let   cur    = 0;
+
+  function show(n) {
+    slides[cur].classList.remove('on');
+    cur = Math.max(0, Math.min(total - 1, n));
+    slides[cur].classList.add('on');
+    document.getElementById('cnt').textContent = `${cur + 1} / ${total}`;
+    document.getElementById('bPrev').disabled  = cur === 0;
+    document.getElementById('bNext').disabled  = cur === total - 1;
+    document.getElementById('prog').style.width = `${((cur + 1) / total) * 100}%`;
+  }
+
+  function go(d) { show(cur + d); }
+
+  document.addEventListener('keydown', e => {
+    if (e.code === 'ArrowRight' || e.code === 'Space') { e.preventDefault(); go(1); }
+    if (e.code === 'ArrowLeft')  go(-1);
+    if (e.code === 'KeyF') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  show(0);
+</script>
+</body>
+</html>

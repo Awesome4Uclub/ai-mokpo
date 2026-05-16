@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>강사용 수업 타이머 · 목포공업고 · 2026.05.28-29</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0c0c0c;
+      color: #f0f0f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* ── Top Progress Rail ── */
+    .rail {
+      display: flex;
+      align-items: center;
+      padding: 13px 20px 11px;
+      background: #111;
+      border-bottom: 1px solid #1e1e1e;
+      gap: 0;
+      flex-shrink: 0;
+    }
+    .rail-segs {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      gap: 0;
+    }
+    .r-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1e1e1e;
+      border: 2px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #555;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .r-dot:hover { border-color: #666; color: #999; }
+    .r-dot.done { background: #1e1e1e; border-color: #444; color: #555; }
+    .r-dot.done::after {
+      content: '✓';
+      position: absolute;
+      font-size: 8px;
+      top: -1px;
+      right: -1px;
+      color: #555;
+    }
+    .r-dot.active {
+      background: #f0f0f0;
+      border-color: #f0f0f0;
+      color: #000;
+      box-shadow: 0 0 14px rgba(255,255,255,0.25);
+    }
+    .r-dot.brk.active { background: #555; border-color: #888; color: #eee; }
+    .r-line {
+      flex: 1;
+      height: 2px;
+      background: #1e1e1e;
+      min-width: 6px;
+    }
+    .r-line.done { background: #444; }
+    .rail-meta {
+      font-size: 11px;
+      color: #444;
+      padding-left: 14px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── Main Display ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 16px 24px;
+      overflow: hidden;
+    }
+
+    .sess-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 4px 13px;
+      border-radius: 20px;
+      background: #1e1e1e;
+      color: #777;
+      border: 1px solid #2a2a2a;
+    }
+    .phase {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .sess-title {
+      font-size: clamp(28px, 4.5vw, 60px);
+      font-weight: 800;
+      color: #f5f5f5;
+      text-align: center;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 7px;
+    }
+    .sess-sub {
+      font-size: clamp(12px, 1.6vw, 16px);
+      color: #555;
+      text-align: center;
+      margin-bottom: 28px;
+      max-width: 640px;
+      line-height: 1.5;
+    }
+
+    .countdown {
+      font-size: clamp(88px, 19vw, 210px);
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: #ffffff;
+      transition: color 0.4s;
+    }
+    .countdown.warn  { color: #ffbb00; }
+    .countdown.danger { color: #ff4040; animation: pulse 0.8s infinite; }
+    .countdown.brk-c { color: #888; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.65; } }
+
+    /* Session progress bar */
+    .s-prog {
+      margin-top: 22px;
+      width: 100%;
+      max-width: 440px;
+    }
+    .s-bar {
+      height: 4px;
+      background: #1e1e1e;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .s-fill {
+      height: 100%;
+      background: #f0f0f0;
+      border-radius: 2px;
+      transition: width 1s linear;
+    }
+    .s-fill.brk-f { background: #555; }
+    .s-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #3a3a3a;
+      margin-top: 6px;
+    }
+
+    /* Next preview */
+    .nxt {
+      position: absolute;
+      bottom: 70px;
+      font-size: 12px;
+      color: #333;
+      text-align: center;
+    }
+
+    /* Keyboard hints */
+    .kbd {
+      position: absolute;
+      bottom: 70px;
+      right: 20px;
+      font-size: 10px;
+      color: #282828;
+      text-align: right;
+      line-height: 2;
+    }
+    .k {
+      background: #191919;
+      border: 1px solid #272727;
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: monospace;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px 18px;
+      background: #111;
+      border-top: 1px solid #1a1a1a;
+      flex-shrink: 0;
+    }
+    .btn {
+      background: #1a1a1a;
+      border: 1.5px solid #2a2a2a;
+      color: #888;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .btn:hover:not(:disabled) { background: #242424; border-color: #444; color: #ccc; }
+    .btn.primary {
+      background: #eeeeee;
+      border-color: #eee;
+      color: #000;
+      padding: 9px 32px;
+      font-size: 16px;
+    }
+    .btn.primary:hover { background: #fff; }
+    .btn:disabled { opacity: 0.28; cursor: default; pointer-events: none; }
+    .auto-lbl {
+      font-size: 12px;
+      color: #3a3a3a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      padding-left: 6px;
+    }
+    .auto-lbl input { cursor: pointer; accent-color: #888; }
+
+    /* ── Session-end Overlay ── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .overlay.show { opacity: 1; pointer-events: all; }
+    .ov-icon  { font-size: 72px; line-height: 1; }
+    .ov-title { font-size: 34px; font-weight: 800; color: #fff; }
+    .ov-sub   { font-size: 17px; color: #666; }
+    .ov-btn   {
+      margin-top: 10px;
+      background: #fff; color: #000;
+      border: none; padding: 13px 44px;
+      border-radius: 8px; font-size: 18px; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+    }
+    .ov-skip  {
+      background: none; border: none;
+      color: #444; font-size: 13px; cursor: pointer;
+      font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Rail -->
+  <div class="rail">
+    <div class="rail-segs" id="railSegs"></div>
+    <div class="rail-meta" id="railMeta">총 120분</div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="sess-meta">
+      <div class="tag"  id="sTag">1교시</div>
+      <div class="phase" id="sPhase">이론</div>
+    </div>
+    <div class="sess-title" id="sTitle">AI 전문가란?</div>
+    <div class="sess-sub"   id="sSub">AI 직군 소개 · 핵심 역량 · 커리어 로드맵</div>
+
+    <div class="countdown" id="cd">10:00</div>
+
+    <div class="s-prog">
+      <div class="s-bar"><div class="s-fill" id="sFill" style="width:100%"></div></div>
+      <div class="s-labels">
+        <span id="sLeft">10:00 남음</span>
+        <span id="sTotal">총 10분</span>
+      </div>
+    </div>
+
+    <div class="nxt" id="nxt"></div>
+
+    <div class="kbd">
+      <span class="k">Space</span> 시작/정지 &nbsp;
+      <span class="k">R</span> 리셋 &nbsp;
+      <span class="k">←</span><span class="k">→</span> 이동 &nbsp;
+      <span class="k">F</span> 전체화면
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn" id="bPrev" onclick="prevSess()">◀ 이전</button>
+    <button class="btn primary" id="bPlay" onclick="togglePlay()">▶ 시작</button>
+    <button class="btn" id="bReset" onclick="resetTimer()">↺ 리셋</button>
+    <button class="btn" id="bNext" onclick="nextSess()">다음 ▶</button>
+    <label class="auto-lbl"><input type="checkbox" id="autoAdv"> 자동 넘김</label>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay">
+    <div class="ov-icon"  id="ovIco">✅</div>
+    <div class="ov-title" id="ovTitle">세션 완료</div>
+    <div class="ov-sub"   id="ovSub">다음 세션으로 넘어가세요</div>
+    <button class="ov-btn"  onclick="dismissOv(true)">다음 세션 ▶</button>
+    <button class="ov-skip" onclick="dismissOv(false)">현재 세션 유지</button>
+  </div>
+
+  <script>
+    const SESSIONS = [
+      { n:1, label:"AI 전문가란?",      sub:"AI 직군 소개 · 핵심 역량 · 커리어 로드맵",                        min:10, tag:"1교시", phase:"이론",      brk:false },
+      { n:2, label:"바이브 코딩 체험",   sub:"바이브 코딩 이론 · 시연 · 개발 8단계 로드맵",                      min:20, tag:"1교시", phase:"이론·실습",  brk:false },
+      { n:3, label:"AI 숏폼 도구 체험", sub:"파이프라인 이해 · 역할별 도구 탐색 · 나만의 AI 프로필 카드 제작",     min:20, tag:"1교시", phase:"개인 체험",  brk:false },
+      { n:4, label:"🔔  쉬는 시간",     sub:"스마트폰 준비 · 배터리 확인 · 맡고 싶은 역할 생각해두기",            min:10, tag:"휴 식", phase:"BREAK",    brk:true  },
+      { n:5, label:"공동 기획",          sub:"주제 결정 · 콘티 · 역할 분담 · 카카오 단톡방 개설",                 min:5,  tag:"2교시", phase:"팀 협업",   brk:false },
+      { n:6, label:"5인 동시 제작",      sub:"스크립트 → 나래이터 → 배경음악 → 이미지·영상 → 편집 동시 진행",     min:30, tag:"2교시", phase:"제 작",     brk:false },
+      { n:7, label:"완성 & 제출",        sub:"CapCut 1080p 내보내기 → Padlet QR 스캔 → 업로드 → 팀명 입력",    min:5,  tag:"2교시", phase:"제 출",     brk:false },
+      { n:8, label:"팀 발표",            sub:"Padlet 영상 상영 · 팀 소개 2~3분 · 강사 피드백",                  min:15, tag:"2교시", phase:"발 표",     brk:false },
+      { n:9, label:"QR & 마무리",        sub:"만족도 설문 · Padlet 최종 확인 · 강사 마지막 한 마디",              min:5,  tag:"2교시", phase:"마무리",    brk:false },
+    ];
+
+    let curIdx = 0;
+    let remaining = 0;
+    let totalSec  = 0;
+    let playing   = false;
+    let tmr       = null;
+
+    /* ── Build rail ── */
+    function buildRail() {
+      const wrap = document.getElementById('railSegs');
+      wrap.innerHTML = '';
+      SESSIONS.forEach((s, i) => {
+        if (i > 0) {
+          const ln = document.createElement('div');
+          ln.className = 'r-line';
+          ln.id = `rl${i}`;
+          wrap.appendChild(ln);
+        }
+        const dot = document.createElement('div');
+        dot.className = `r-dot${s.brk ? ' brk' : ''}`;
+        dot.id = `rd${i}`;
+        dot.textContent = s.n;
+        dot.title = `${s.label} (${s.min}분)`;
+        dot.addEventListener('click', () => { stop(); load(i); });
+        wrap.appendChild(dot);
+      });
+    }
+
+    function refreshRail() {
+      SESSIONS.forEach((s, i) => {
+        const d = document.getElementById(`rd${i}`);
+        const l = document.getElementById(`rl${i}`);
+        d.classList.remove('done','active');
+        if (l) l.classList.remove('done');
+        if (i < curIdx)     { d.classList.add('done'); if(l) l.classList.add('done'); }
+        else if (i===curIdx){ d.classList.add('active'); }
+      });
+    }
+
+    /* ── Load session ── */
+    function load(idx) {
+      curIdx    = idx;
+      const s   = SESSIONS[idx];
+      totalSec  = s.min * 60;
+      remaining = totalSec;
+      playing   = false;
+
+      document.getElementById('sTag').textContent   = s.tag;
+      document.getElementById('sPhase').textContent = s.phase;
+      document.getElementById('sTitle').textContent = s.label;
+      document.getElementById('sSub').textContent   = s.sub;
+      document.getElementById('bPlay').textContent  = '▶ 시작';
+      document.getElementById('sTotal').textContent = `총 ${s.min}분`;
+
+      const nxt = SESSIONS[idx + 1];
+      document.getElementById('nxt').textContent = nxt
+        ? `다음 ▶  ${nxt.label}  (${nxt.min}분)`
+        : '마지막 세션입니다';
+
+      const cd  = document.getElementById('cd');
+      const sf  = document.getElementById('sFill');
+      cd.classList.remove('warn','danger','brk-c');
+      sf.classList.remove('brk-f');
+      if (s.brk) { cd.classList.add('brk-c'); sf.classList.add('brk-f'); }
+
+      document.getElementById('bPrev').disabled = idx === 0;
+      document.getElementById('bNext').disabled = idx === SESSIONS.length - 1;
+
+      updateDisplay();
+      refreshRail();
+    }
+
+    /* ── Display ── */
+    function updateDisplay() {
+      const m  = Math.floor(remaining / 60);
+      const sc = remaining % 60;
+      const ts = `${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+      document.getElementById('cd').textContent    = ts;
+      document.getElementById('sLeft').textContent = `${ts} 남음`;
+      document.getElementById('sFill').style.width = `${(remaining / totalSec) * 100}%`;
+
+      const cd = document.getElementById('cd');
+      if (!SESSIONS[curIdx].brk) {
+        cd.classList.remove('warn','danger');
+        if      (remaining <= 59)  cd.classList.add('danger');
+        else if (remaining <= 120) cd.classList.add('warn');
+      }
+    }
+
+    /* ── Timer controls ── */
+    function togglePlay() {
+      playing ? stop() : start();
+    }
+
+    function start() {
+      playing = true;
+      document.getElementById('bPlay').textContent = '⏸ 정지';
+      tmr = setInterval(() => {
+        if (remaining > 0) { remaining--; updateDisplay(); }
+        else               { stop(); onEnd(); }
+      }, 1000);
+    }
+
+    function stop() {
+      playing = false;
+      clearInterval(tmr);
+      tmr = null;
+      document.getElementById('bPlay').textContent = '▶ 시작';
+    }
+
+    function resetTimer() {
+      stop();
+      remaining = totalSec;
+      updateDisplay();
+    }
+
+    function prevSess() { stop(); load(curIdx - 1); }
+    function nextSess() { stop(); load(curIdx + 1); }
+
+    /* ── Session end ── */
+    function onEnd() {
+      if (document.getElementById('autoAdv').checked && curIdx < SESSIONS.length - 1) {
+        setTimeout(() => nextSess(), 800);
+      } else {
+        showOverlay();
+      }
+    }
+
+    function showOverlay() {
+      const s   = SESSIONS[curIdx];
+      const nxt = SESSIONS[curIdx + 1];
+      document.getElementById('ovIco').textContent   = s.brk ? '🔔' : '✅';
+      document.getElementById('ovTitle').textContent = `${s.label}  종료`;
+      document.getElementById('ovSub').textContent   = nxt
+        ? `다음: ${nxt.label} (${nxt.min}분)`
+        : '수업 완료! 수고하셨습니다 🎉';
+      document.getElementById('overlay').classList.add('show');
+    }
+
+    function dismissOv(advance) {
+      document.getElementById('overlay').classList.remove('show');
+      if (advance && curIdx < SESSIONS.length - 1) nextSess();
+    }
+
+    /* ── Keyboard ── */
+    document.addEventListener('keydown', e => {
+      const tag = e.target.tagName;
+      if (tag === 'INPUT') return;
+      if (e.code === 'Space')      { e.preventDefault(); togglePlay(); }
+      if (e.code === 'KeyR')       resetTimer();
+      if (e.code === 'ArrowRight' && curIdx < SESSIONS.length-1) { stop(); load(curIdx+1); }
+      if (e.code === 'ArrowLeft'  && curIdx > 0)                 { stop(); load(curIdx-1); }
+      if (e.code === 'KeyF') {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+        else document.exitFullscreen();
+      }
+    });
+
+    /* ── Init ── */
+    buildRail();
+    load(0);
+  </script>
+</body>
+</html>

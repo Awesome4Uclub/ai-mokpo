@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>역할 카드 (인쇄용) · 목포공업고 · 2026.05.28-29</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: #F0F0F0;
+      color: #111;
+      padding: 20px;
+    }
+
+    /* ── Screen preview header ── */
+    .screen-header {
+      max-width: 980px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sh-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1c1c1a;
+    }
+
+    .sh-meta {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .sh-btn {
+      background: #1c1c1a;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* ── Cards grid (screen) ── */
+    .grid {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #fff;
+      border: 1.5px solid #D0D0D0;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .c-head {
+      background: #1c1c1a;
+      color: #fff;
+      padding: 10px 13px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .c-num {
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 2px 7px;
+      letter-spacing: 0.05em;
+    }
+
+    .c-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .c-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .c-body {
+      padding: 10px 13px 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .c-section-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .c-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .t-chip {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #1c1c1a;
+      color: #fff;
+    }
+
+    .t-chip.alt {
+      background: #555;
+    }
+
+    .t-chip.sub {
+      background: #EFEFEF;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+
+    .c-steps {
+      list-style: none;
+    }
+
+    .c-steps li {
+      font-size: 11px;
+      color: #333;
+      padding: 2.5px 0;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.45;
+    }
+
+    .c-steps li::before {
+      content: attr(data-n);
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: #888;
+    }
+
+    .c-prompt {
+      background: #F5F5F5;
+      border: 1px solid #E5E5E5;
+      border-radius: 6px;
+      padding: 7px 9px;
+      font-size: 9.5px;
+      color: #444;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    .c-prompt .pl {
+      font-weight: 700;
+      color: #888;
+      font-size: 8.5px;
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .c-url {
+      font-size: 10px;
+      color: #888;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    /* Info cell */
+    .info-cell {
+      background: #fff;
+      border: 1.5px dashed #BBBBB0;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .info-scissors {
+      font-size: 28px;
+    }
+
+    .info-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #555;
+    }
+
+    .info-desc {
+      font-size: 11px;
+      color: #999;
+      line-height: 1.6;
+    }
+
+    .info-flow {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      background: #F5F5F5;
+      border-radius: 6px;
+      padding: 8px 12px;
+      width: 100%;
+    }
+
+    .info-flow-title {
+      font-size: 9px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.1em;
+      margin-bottom: 2px;
+    }
+
+    .info-flow-step {
+      font-size: 10px;
+      color: #444;
+      font-weight: 600;
+    }
+
+    /* ── Print styles ── */
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .screen-header {
+        display: none;
+      }
+
+      .grid {
+        max-width: 100%;
+        margin: 0;
+        gap: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        height: 100vh;
+      }
+
+      .card,
+      .info-cell {
+        border-radius: 0;
+        border: 1px dashed #BBB;
+        page-break-inside: avoid;
+      }
+
+      .c-head {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .t-chip {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="screen-header">
+    <div>
+      <div class="sh-title">역할 카드 (인쇄용) · 목포공업고 AI 특강 · 2026.05.28-29</div>
+      <div class="sh-meta">점선 따라 잘라서 팀원에게 한 장씩 배부 · A4 가로 인쇄</div>
+    </div>
+    <button class="sh-btn" onclick="window.print()">🖨 인쇄하기</button>
+  </div>
+
+  <div class="grid">
+
+    <!-- Card 1 — 스크립트 -->
+    <div class="card">
+      <div class="c-head">
+        <span class="c-num">ROLE 01</span>
+
+        <span class="c-name">스크립트 담당</span>
+      </div>
+      <div class="c-body">
+        <div>
+          <div class="c-section-label">사용 도구</div>
+          <div class="c-tools">
+            <span class="t-chip">ChatGPT</span>
+            <span class="t-chip alt">Gemini</span>
+            <span class="t-chip sub">Claude</span>
+          </div>
+        </div>
+        <div>
+          <div class="c-section-label">작업 순서</div>
+          <ol class="c-steps">
+            <li data-n="1.">ChatGPT 앱 (또는 Gemini·Claude) 열기</li>
+            <li data-n="2.">아래 프롬프트 입력 → 장면별 대사·화면설명 생성</li>
+            <li data-n="3.">생성된 스크립트 → 단톡방에 텍스트로 공유<br><span style="color:#888;font-size:9.5px">(나래이터·이미지 담당이 바로
+                활용)</span></li>
+          </ol>
+        </div>
+        <div class="c-prompt">
+          <span class="pl">💬 팀 스크립트 프롬프트</span>
+          "우리 팀 주제: [주제] / 대상: 목포공업고 학생 / 45초 숏폼 스크립트 / 장면 6개 / 형식: 장면번호|자막(대사)|화면설명|이미지 프롬프트(영문) / 마지막 장면 임팩트 한 줄 결론"
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 — 나래이터 -->
+    <div class="card">
+      <div class="c-head">
+        <span class="c-num">ROLE 02</span>
+
+        <span class="c-name">나래이터 담당</span>
+      </div>
+      <div class="c-body">
+        <div>
+          <div class="c-section-label">사용 도구</div>
+          <div class="c-tools">
+            <span class="t-chip">Typecast AI</span>
+            <span class="t-chip sub">셀프 녹음</span>
+          </div>
+          <div class="c-url" style="margin-top:5px">🔗 typecast.ai</div>
+        </div>
+        <div>
+          <div class="c-section-label">Option A — Typecast AI (추천)</div>
+          <ol class="c-steps">
+            <li data-n="1.">typecast.ai 접속 → 구글 계정 로그인</li>
+            <li data-n="2.">스크립트 대사 붙여넣기 → AI 목소리 선택</li>
+            <li data-n="3.">MP3 다운로드 → 단톡방 전송</li>
+          </ol>
+        </div>
+        <div>
+          <div class="c-section-label">Option B — 셀프 녹음</div>
+          <ol class="c-steps">
+            <li data-n="1.">기본 녹음 앱으로 대사 직접 녹음</li>
+            <li data-n="2.">CapCut 내 "음질 개선" AI 기능 적용</li>
+            <li data-n="3.">파일 → 편집 담당에게 단톡방 전송</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 — 배경음악 -->
+    <div class="card">
+      <div class="c-head">
+        <span class="c-num">ROLE 03</span>
+
+        <span class="c-name">배경음악 담당</span>
+      </div>
+      <div class="c-body">
+        <div>
+          <div class="c-section-label">사용 도구</div>
+          <div class="c-tools">
+            <span class="t-chip">Suno AI</span>
+          </div>
+          <div class="c-url" style="margin-top:5px">🔗 suno.com</div>
+        </div>
+        <div>
+          <div class="c-section-label">작업 순서</div>
+          <ol class="c-steps">
+            <li data-n="1.">suno.com 접속 → 구글 계정 로그인</li>
+            <li data-n="2.">"Custom" 선택 → 아래 프롬프트 입력</li>
+            <li data-n="3.">"Instrumental" 체크 (가사 없음) → 생성</li>
+            <li data-n="4.">30~60초 클립 선택 → MP3 다운로드 → 단톡방 전송</li>
+          </ol>
+        </div>
+        <div class="c-prompt">
+          <span class="pl">💬 Suno 프롬프트 예시</span>
+          "upbeat tech background music, motivational, no vocals, Korean youth education short video, 45 seconds,
+          electronic, bright"
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 — 이미지·영상 -->
+    <div class="card">
+      <div class="c-head">
+        <span class="c-num">ROLE 04</span>
+
+        <span class="c-name">이미지·영상 담당</span>
+      </div>
+      <div class="c-body">
+        <div>
+          <div class="c-section-label">사용 도구</div>
+          <div class="c-tools">
+            <span class="t-chip">Gemini</span>
+            <span class="t-chip alt">ChatGPT</span>
+            <span class="t-chip sub">Grok</span>
+            <span class="t-chip sub">Flow</span>
+          </div>
+        </div>
+        <div>
+          <div class="c-section-label">이미지 생성 (스마트폰 앱)</div>
+          <ol class="c-steps">
+            <li data-n="1.">Gemini 앱 또는 ChatGPT 앱 열기</li>
+            <li data-n="2.">스크립트의 '이미지 프롬프트(영문)' 입력</li>
+            <li data-n="3.">이미지 생성 → 갤러리 저장 → 단톡방 전송</li>
+          </ol>
+        </div>
+        <div>
+          <div class="c-section-label">영상 생성 (선택)</div>
+          <ol class="c-steps">
+            <li data-n="1.">grok.com 또는 flow.google.com 접속</li>
+            <li data-n="2.">장면 설명 입력 → 짧은 클립 생성 → 단톡방 전송</li>
+          </ol>
+        </div>
+        <div class="c-prompt">
+          <span class="pl">💬 이미지 프롬프트 추가 팁</span>
+          스크립트 영문 프롬프트 뒤에 추가: ", photorealistic, bright lighting, high quality"
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 — 편집 -->
+    <div class="card">
+      <div class="c-head">
+        <span class="c-num">ROLE 05</span>
+
+        <span class="c-name">편집 담당</span>
+      </div>
+      <div class="c-body">
+        <div>
+          <div class="c-section-label">사용 도구</div>
+          <div class="c-tools">
+            <span class="t-chip">CapCut</span>
+          </div>
+        </div>
+        <div>
+          <div class="c-section-label">작업 순서</div>
+          <ol class="c-steps">
+            <li data-n="1.">단톡방 소스파일 전부 다운로드 (이미지·음성·음악)</li>
+            <li data-n="2.">CapCut 새 프로젝트 → 이미지·영상 클립 순서대로 배치</li>
+            <li data-n="3.">나래이터 오디오 삽입 → 배경음악 추가 (볼륨 20~30%)</li>
+            <li data-n="4.">"텍스트 → 자동 자막" AI 기능 → 자막 크기·색 조정</li>
+            <li data-n="5.">전환 효과 · 필터 적용 → 1080p 내보내기</li>
+            <li data-n="6.">완성본 → 단톡방 공유 + Padlet QR 업로드</li>
+          </ol>
+        </div>
+        <div class="c-prompt">
+          <span class="pl">⚠ 주의</span>
+          배터리 50%+ 유지 · 파일 전송 시 "원본 화질" 선택 · Wi-Fi 끊기면 핫스팟 ON
+        </div>
+      </div>
+    </div>
+
+    <!-- Info cell -->
+    <div class="info-cell">
+      <div class="info-scissors">✂</div>
+      <div class="info-title">가위로 점선 따라 잘라서<br>역할별로 나눠 가지세요</div>
+      <div class="info-flow">
+        <div class="info-flow-title">📤 제출 플로우</div>
+        <div class="info-flow-step">① CapCut 1080p 내보내기</div>
+        <div class="info-flow-step">② Padlet QR 스캔</div>
+        <div class="info-flow-step">③ 영상 업로드</div>
+        <div class="info-flow-step">④ 팀명 · 주제 입력 → 완료!</div>
+      </div>
+      <div class="info-desc">
+        단톡방 파일 전송 시<br>반드시 <b>"원본 화질"</b>로 보내기
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,3092 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 전문가 특강 · 목포공업고등학교 · 2026.05.28-29</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: #F7F7F7;
+      color: #1c1c1a;
+      padding: 32px 20px 64px;
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+      white-space: nowrap;
+      background: #EFEFEF;
+      color: #444444;
+    }
+
+    .b-v6 {
+      background: #111111;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .b-dark {
+      background: #333;
+      color: #fff;
+    }
+
+    /* ── Header ── */
+    .page-header {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1c1c1a;
+    }
+
+    .instructor-bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .top-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
+    }
+
+    /* ── Schedule Overview ── */
+    .schedule-overview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .sched-card {
+      background: #fff;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+
+    .sched-day {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .sched-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid #f0f0ec;
+      font-size: 12px;
+    }
+
+    .sched-row:last-child {
+      border-bottom: none;
+    }
+
+    .sched-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #1c1c1a;
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .sched-class {
+      font-weight: 600;
+      color: #1c1c1a;
+      flex: 1;
+    }
+
+    .sched-time {
+      font-size: 10px;
+      color: #888;
+    }
+
+    /* ── Prep Block ── */
+    .prep-block {
+      background: #fff;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+    }
+
+    .prep-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1c1c1a;
+      margin-bottom: 10px;
+    }
+
+    .prep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .prep-item {
+      background: #F5F5F5;
+      border-radius: 9px;
+      padding: 8px 10px;
+    }
+
+    .prep-name {
+      font-weight: 700;
+      font-size: 11px;
+      color: #1c1c1a;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .prep-desc {
+      font-size: 10px;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    .prep-tag {
+      display: inline-block;
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .tag-install {
+      background: #1c1c1a;
+      color: white;
+    }
+
+    .tag-browser {
+      background: #555;
+      color: white;
+    }
+
+    .tag-free {
+      background: #888;
+      color: white;
+    }
+
+    /* ── Period Block ── */
+    .period-block {
+      border-radius: 14px;
+      border: 2px solid;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .period-block.theory {
+      border-color: #CCCCCC;
+    }
+
+    .period-block.practice {
+      border-color: #BBBBBB;
+    }
+
+    .period-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .period-block.theory .period-header {
+      background: #111111;
+    }
+
+    .period-block.practice .period-header {
+      background: #1E1E1E;
+    }
+
+    .period-sub {
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.82;
+    }
+
+    .period-body {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* ── Timeline ── */
+    .tl-row {
+      display: flex;
+      align-items: stretch;
+    }
+
+    .time-col {
+      width: 52px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 14px;
+    }
+
+    .time-label {
+      font-size: 10px;
+      color: #888888;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+      background: #333333;
+    }
+
+    .seg {
+      width: 2px;
+      flex: 1;
+      margin-top: 4px;
+      background: #333333;
+      opacity: 0.18;
+      min-height: 20px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      flex: 1;
+      border-radius: 11px;
+      border: 1px solid #E5E5E5;
+      padding: 13px 15px;
+      background: #fff;
+      margin-left: 10px;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1c1c1a;
+    }
+
+    .dur {
+      font-size: 12px;
+      color: #8a8a85;
+    }
+
+    /* ── Lists ── */
+    .items {
+      list-style: none;
+    }
+
+    .items li {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      margin-bottom: 5px;
+      font-size: 13px;
+      color: #4a4a45;
+      line-height: 1.6;
+    }
+
+    .items li::before {
+      content: '›';
+      color: #aaa;
+      flex-shrink: 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .items li b {
+      color: #1c1c1a;
+      font-weight: 600;
+    }
+
+    .hl {
+      background: #f5f5f2;
+      border-radius: 8px;
+      padding: 9px 12px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #4a4a45;
+      line-height: 1.6;
+    }
+
+    .hl b {
+      color: #1c1c1a;
+      font-weight: 600;
+    }
+
+    /* ── Break ── */
+    .break-block {
+      background: #F0F0EE;
+      border-radius: 10px;
+      border: 1.5px dashed #CCCCCC;
+      padding: 10px 18px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+    }
+
+    .break-time {
+      font-size: 11px;
+      color: #aaa;
+      margin-left: auto;
+    }
+
+    /* ── Role Grid ── */
+    .role-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .role-chip {
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      border: 1px solid;
+      text-align: center;
+      min-width: 100px;
+      flex: 1;
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s;
+      background: #F5F5F5;
+      border-color: #DDDDDD;
+      color: #222222;
+    }
+
+    .role-chip:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .role-chip:hover .role-name {
+      text-decoration: underline;
+    }
+
+    .role-chip .role-name {
+      font-weight: 700;
+      font-size: 11px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .role-chip .role-desc {
+      font-size: 10px;
+      opacity: 0.75;
+      line-height: 1.4;
+    }
+
+    /* ── Layer Stack ── */
+    .layer-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .layer {
+      border-radius: 8px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      background: #F2F2F2;
+    }
+
+    .layer-name {
+      font-weight: 700;
+      font-size: 13px;
+      min-width: 52px;
+    }
+
+    .layer-desc {
+      color: #4a4a45;
+      line-height: 1.5;
+    }
+
+    /* ── Career Grid ── */
+    .career-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .career-chip {
+      background: #f5f5f2;
+      border-radius: 9px;
+      padding: 9px 10px;
+      font-size: 11px;
+      color: #4a4a45;
+    }
+
+    .cc-name {
+      font-weight: 700;
+      font-size: 12px;
+      color: #1c1c1a;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .cc-skill {
+      font-size: 10px;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    /* ── Roadmap ── */
+    .roadmap {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .road-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f5f5f2;
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 12px;
+    }
+
+    .road-lv {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .road-title {
+      font-weight: 600;
+      color: #1c1c1a;
+      margin-bottom: 1px;
+    }
+
+    .road-detail {
+      color: #666;
+      font-size: 11px;
+    }
+
+    /* ── Now Grid ── */
+    .now-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .now-item {
+      background: #fff;
+      border: 1px solid #e5e5e0;
+      border-radius: 9px;
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    .now-title {
+      font-weight: 600;
+      color: #1c1c1a;
+      margin-bottom: 2px;
+    }
+
+    .now-desc {
+      color: #666;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    /* ── Tip Box ── */
+    .tip-box {
+      background: #F5F5F5;
+      border: 1.5px solid #DDDDDD;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #444444;
+      line-height: 1.6;
+    }
+
+    .tip-box b {
+      font-weight: 600;
+    }
+
+    /* ── Vibe Coding ── */
+    .vibe-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin: 12px 0 6px;
+    }
+
+    .vibe-def {
+      background: #F5F5F5;
+      border-radius: 10px;
+      padding: 11px 14px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #333333;
+    }
+
+    .vibe-def b {
+      color: #111111;
+    }
+
+    .vibe-def-creator {
+      font-size: 10px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    /* ── Vibe Type Cards ── */
+    .vibe-types {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .vibe-type-card {
+      flex: 1;
+      background: white;
+      border-radius: 10px;
+      border: 1.5px solid #DDDDDD;
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .vtc-icon {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .vtc-name {
+      font-weight: 700;
+      font-size: 12px;
+      color: #1c1c1a;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .vtc-where {
+      font-size: 10px;
+      color: #888;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .vtc-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+
+    .vtc-tool {
+      font-size: 9.5px;
+      background: #f5f5f2;
+      border-radius: 4px;
+      padding: 2px 5px;
+      color: #666;
+    }
+
+    .vtc-ex {
+      font-size: 10px;
+      font-weight: 600;
+      display: block;
+      color: #444444;
+    }
+
+    /* ── Vibe Roadmap ── */
+    .vibe-rdmap {
+      margin-bottom: 10px;
+    }
+
+    .vrd-row {
+      display: flex;
+      gap: 4px;
+    }
+
+    .vrd-row+.vrd-row {
+      margin-top: 4px;
+    }
+
+    .vrd-step {
+      flex: 1;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #E0E0E0;
+      padding: 7px 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+    }
+
+    .vrd-step:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
+      border-color: #333;
+    }
+
+    .vrd-step:hover .vrd-title {
+      color: #111;
+    }
+
+    .vrd-step::after {
+      content: '탭';
+      font-size: 8px;
+      color: #ccc;
+      display: block;
+      margin-top: 3px;
+    }
+
+    .vrd-num {
+      font-size: 9px;
+      color: #bbb;
+      display: block;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .vrd-ico {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .vrd-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #1c1c1a;
+      display: block;
+    }
+
+    .vrd-sub {
+      font-size: 9px;
+      color: #888;
+      display: block;
+      margin-top: 1px;
+      line-height: 1.3;
+    }
+
+    .vrd-arr {
+      display: flex;
+      align-items: center;
+      color: #ccc;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .vrd-step.hi-deploy {
+      border-color: #DDDDDD;
+      background: #F5F5F5;
+    }
+
+    .vrd-step.hi-pack {
+      border-color: #DDDDDD;
+      background: #F5F5F5;
+    }
+
+    /* ── Roadmap Detail Modal ── */
+    .rd-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.52);
+      z-index: 2500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .rd-overlay.open {
+      display: flex;
+    }
+
+    .rd-modal {
+      background: white;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: rdIn 0.18s ease;
+    }
+
+    @keyframes rdIn {
+      from {
+        transform: scale(0.92);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .rd-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid #f0f0ec;
+    }
+
+    .rd-step-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      opacity: 0.55;
+      margin-bottom: 4px;
+    }
+
+    .rd-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1c1c1a;
+      margin-bottom: 3px;
+    }
+
+    .rd-sub {
+      font-size: 11px;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    .rd-close {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: none;
+      background: #f1efe8;
+      cursor: pointer;
+      font-size: 14px;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+
+    .rd-close:hover {
+      background: #E0E0E0;
+    }
+
+    .rd-body {
+      padding: 16px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .rd-sec-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 7px;
+    }
+
+    .rd-def {
+      background: #f8f8f6;
+      border-radius: 9px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #4a4a45;
+      line-height: 1.7;
+    }
+
+    .rd-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .rd-items li {
+      font-size: 12px;
+      color: #4a4a45;
+      line-height: 1.6;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .rd-items li::before {
+      content: '›';
+      color: #bbb;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .rd-items li b {
+      color: #1c1c1a;
+      white-space: nowrap;
+    }
+
+    .rd-tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .rd-tool {
+      background: #EEEEEE;
+      color: #333333;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .rd-prompt {
+      background: #1e1e1e;
+      border-radius: 9px;
+      padding: 11px 13px;
+      font-size: 11.5px;
+      color: #d4d4cc;
+      line-height: 1.7;
+      font-family: 'Consolas', 'Courier New', monospace;
+      white-space: pre-wrap;
+    }
+
+    .rd-prompt-label {
+      font-size: 10px;
+      color: #888;
+      display: block;
+      margin-bottom: 6px;
+      font-family: sans-serif;
+      font-style: italic;
+    }
+
+    .rd-tip {
+      background: #F5F5F5;
+      border: 1.5px solid #DDDDDD;
+      border-radius: 9px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .vibe-tools {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .vibe-tool-card {
+      flex: 1;
+      background: white;
+      border-radius: 11px;
+      border: 1.5px solid #DDDDDD;
+      padding: 12px 11px;
+    }
+
+    .vt-logo {
+      font-size: 22px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .vt-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1c1c1a;
+      display: block;
+      margin-bottom: 1px;
+    }
+
+    .vt-maker {
+      font-size: 10px;
+      color: #aaa;
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .vt-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 5px;
+      padding: 2px 7px;
+      margin-bottom: 7px;
+      background: #EEEEEE;
+      color: #333333;
+    }
+
+    .vt-feats {
+      list-style: none;
+      margin: 0 0 8px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .vt-feats li {
+      font-size: 11px;
+      color: #4a4a45;
+      display: flex;
+      gap: 5px;
+      align-items: flex-start;
+      line-height: 1.4;
+    }
+
+    .vt-feats li::before {
+      content: '›';
+      color: #bbb;
+      flex-shrink: 0;
+    }
+
+    .vt-target {
+      font-size: 10px;
+      border-radius: 6px;
+      padding: 4px 8px;
+      display: block;
+      font-weight: 600;
+      text-align: center;
+      background: #EEEEEE;
+      color: #333333;
+    }
+
+    .vibe-intro {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .vibe-pill {
+      flex: 1;
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+      font-size: 11px;
+      background: #EEEEEE;
+      color: #333333;
+      line-height: 1.5;
+    }
+
+    .vibe-pill .vp-icon {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .vibe-pill .vp-title {
+      display: block;
+      font-weight: 700;
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+
+    .vibe-flow {
+      display: flex;
+      align-items: center;
+      background: #EEEEEE;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .vf-step {
+      font-size: 11px;
+      color: #333333;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .vf-arrow {
+      color: #AAAAAA;
+      font-size: 12px;
+    }
+
+    /* ── Prompt Example ── */
+    .prompt-ex {
+      border-left: 3px solid #AAAAAA;
+      border-radius: 0 8px 8px 0;
+      background: #f5f5f2;
+      padding: 9px 12px;
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .prompt-ex .pe-label {
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      opacity: 0.7;
+      display: block;
+    }
+
+    .prompt-ex .pe-text {
+      font-family: 'Consolas', monospace;
+      font-size: 11.5px;
+      color: #2a2a2a;
+      white-space: pre-wrap;
+    }
+
+    /* ── Mission Pills ── */
+    .mission-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .mission-pill {
+      flex: 1;
+      background: #f5f5f2;
+      border-radius: 9px;
+      padding: 8px 10px;
+      font-size: 11px;
+      color: #4a4a45;
+      line-height: 1.5;
+    }
+
+    .mission-pill .mp-star {
+      font-size: 12px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .mission-pill .mp-text {
+      display: block;
+      font-weight: 600;
+      color: #1c1c1a;
+      margin-bottom: 2px;
+    }
+
+    .mission-pill .mp-desc {
+      display: block;
+      font-size: 10px;
+    }
+
+    /* ── Shortform Tools ── */
+    .sf-tool-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .sf-tool {
+      flex: 1;
+      min-width: 80px;
+      background: #f5f5f2;
+      border-radius: 10px;
+      padding: 10px 10px;
+      text-align: center;
+      border: 1px solid #E5E5E5;
+    }
+
+    .sf-tool-name {
+      font-weight: 700;
+      font-size: 12px;
+      color: #1c1c1a;
+      display: block;
+      margin: 4px 0 3px;
+    }
+
+    .sf-tool-desc {
+      font-size: 10px;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    .sf-tool-badge {
+      display: inline-block;
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: #111;
+      color: white;
+      font-weight: 700;
+    }
+
+    /* ── Process Steps ── */
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .process-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #f5f5f2;
+      border-radius: 8px;
+      padding: 8px 12px;
+    }
+
+    .ps-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #1c1c1a;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .ps-content {
+      flex: 1;
+    }
+
+    .ps-title {
+      font-weight: 600;
+      font-size: 12px;
+      color: #1c1c1a;
+      margin-bottom: 2px;
+    }
+
+    .ps-desc {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .ps-time {
+      font-size: 10px;
+      color: #aaa;
+      flex-shrink: 0;
+      padding-top: 2px;
+      font-weight: 600;
+    }
+
+    /* ── Team Chips ── */
+    .team-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .team-chip {
+      flex: 1;
+      min-width: 80px;
+      background: #F5F5F5;
+      border: 1px solid #DDDDDD;
+      border-radius: 9px;
+      padding: 8px 10px;
+      text-align: center;
+      font-size: 11px;
+      color: #333333;
+    }
+
+    .team-chip .tc-role {
+      font-weight: 700;
+      font-size: 12px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .team-chip .tc-job {
+      font-size: 10px;
+      opacity: 0.8;
+      line-height: 1.4;
+    }
+
+    /* ── Production Roles ── */
+    .prod-roles {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .prod-role {
+      border-radius: 10px;
+      border: 1.5px solid #E0E0E0;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .prod-role-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      background: #F5F5F5;
+      flex-wrap: wrap;
+    }
+
+    .prod-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #1c1c1a;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .prod-title {
+      font-weight: 700;
+      font-size: 13px;
+      color: #1c1c1a;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .prod-body {
+      padding: 8px 12px;
+    }
+
+    .prod-tools {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .prod-tool-tag {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: #1c1c1a;
+      color: #fff;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .prod-tool-tag.t-alt {
+      background: #555;
+    }
+
+    .prod-tool-tag.t-sub {
+      background: #888;
+    }
+
+    .prod-desc {
+      font-size: 11px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .prod-desc b {
+      color: #1c1c1a;
+    }
+
+    /* ── Planning Box (dark) ── */
+    .planning-box {
+      background: #1c1c1a;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 8px 0;
+    }
+
+    .planning-box-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .planning-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+
+    .planning-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 7px 10px;
+    }
+
+    .planning-step {
+      font-size: 9px;
+      color: #aaa;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .planning-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .planning-desc {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.58);
+      line-height: 1.4;
+    }
+
+    /* ── Plus Alpha ── */
+    .plus-alpha-box {
+      background: #F5F5F5;
+      border: 1.5px solid #DDDDDD;
+      border-radius: 10px;
+      padding: 10px 13px;
+      margin-top: 4px;
+    }
+
+    .pa-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .pa-tools {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .pa-tool {
+      background: #fff;
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      padding: 7px 11px;
+      min-width: 90px;
+      flex: 1;
+    }
+
+    .pa-tool-name {
+      font-weight: 700;
+      font-size: 12px;
+      color: #1c1c1a;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .pa-tool-desc {
+      font-size: 10px;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    /* ── Next Level (dark) ── */
+    .next-level-box {
+      background: #111;
+      border-radius: 10px;
+      padding: 11px 14px;
+      margin-top: 4px;
+    }
+
+    .nl-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #999;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .nl-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nl-item {
+      flex: 1;
+      min-width: 90px;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+
+    .nl-name {
+      font-weight: 700;
+      font-size: 12px;
+      color: #fff;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .nl-desc {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.4;
+    }
+
+    /* ── Submit Box (dark) ── */
+    .submit-box {
+      background: #1c1c1a;
+      border-radius: 10px;
+      padding: 11px 14px;
+      margin-top: 4px;
+    }
+
+    .submit-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .submit-flow {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .submit-step {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 10px;
+      color: #fff;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .submit-arrow {
+      color: #666;
+      font-size: 12px;
+    }
+
+    /* ── Eval Grid ── */
+    .eval-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .eval-item {
+      background: #f5f5f2;
+      border-radius: 9px;
+      padding: 9px 12px;
+    }
+
+    .eval-name {
+      font-weight: 700;
+      font-size: 12px;
+      color: #1c1c1a;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .eval-desc {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    .eval-score {
+      font-size: 10px;
+      color: #aaa;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ── Summary ── */
+    .sum-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .sum {
+      flex: 1 1 110px;
+      background: #f5f5f2;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .sum-l {
+      font-size: 11px;
+      color: #8a8a85;
+      margin-bottom: 4px;
+    }
+
+    .sum-v {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1c1c1a;
+    }
+
+    .sum-v.hi {
+      color: #111111;
+    }
+
+    /* ── Theory Link ── */
+    .theory-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #EEEEEE;
+      color: #444444;
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+
+    /* ── Core Steps ── */
+    .core-steps {
+      display: flex;
+      align-items: stretch;
+      gap: 4px;
+      margin-top: 10px;
+    }
+
+    .core-step {
+      flex: 1;
+      background: #f5f5f2;
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+      font-size: 11px;
+      color: #4a4a45;
+    }
+
+    .cs-title {
+      display: block;
+      font-weight: 700;
+      font-size: 12px;
+      color: #1c1c1a;
+      margin-bottom: 3px;
+    }
+
+    .cs-desc {
+      display: block;
+      line-height: 1.4;
+    }
+
+    .core-arrow {
+      display: flex;
+      align-items: center;
+      color: #ccc;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.52);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 18px;
+      max-width: 520px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: modalIn 0.18s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        transform: scale(0.92) translateY(10px);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid #f0f0ec;
+    }
+
+    .modal-icon {
+      font-size: 32px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1c1c1a;
+    }
+
+    .modal-sub {
+      font-size: 12px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .modal-close {
+      margin-left: auto;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #f1efe8;
+      cursor: pointer;
+      font-size: 16px;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-close:hover {
+      background: #E0E0E0;
+    }
+
+    .modal-body {
+      padding: 16px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .modal-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .modal-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .modal-chip {
+      background: #f5f5f2;
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: #4a4a45;
+    }
+
+    .modal-chip.accent {
+      background: #EEEEEE;
+      color: #333333;
+    }
+
+    .modal-work {
+      background: #f8f8f6;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .modal-work li {
+      font-size: 12px;
+      color: #4a4a45;
+      line-height: 1.7;
+      list-style: none;
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .modal-work li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: #aaa;
+    }
+
+    .salary-bar {
+      display: flex;
+      gap: 8px;
+    }
+
+    .salary-item {
+      flex: 1;
+      background: #f5f5f2;
+      border-radius: 9px;
+      padding: 9px 12px;
+    }
+
+    .salary-lv {
+      font-size: 10px;
+      color: #888;
+      margin-bottom: 3px;
+    }
+
+    .salary-val {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1c1c1a;
+    }
+
+    .modal-tip {
+      background: #F5F5F5;
+      border: 1.5px solid #DDDDDD;
+      border-radius: 9px;
+      padding: 9px 12px;
+      font-size: 12px;
+      color: #444444;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- ── 헤더 ── -->
+    <div class="page-header">
+      <div class="page-title">AI 전문가 특강 · 목포공업고등학교</div>
+    </div>
+    <div class="instructor-bar">
+      <span>전문직업인 체험형 특강</span>
+      <span style="color:#ddd">|</span>
+      <span>AI 전문 강사</span>
+      <span style="color:#ddd">|</span>
+      <span>1·2학년 6클래스</span>
+      <span style="color:#ddd">|</span>
+      <span>2026.05.28(목) · 05.29(금)</span>
+      <span style="color:#ddd">|</span>
+      <span>팀별 5명 구성</span>
+    </div>
+    <div class="top-badges">
+      <span class="badge">AI 전문가</span>
+      <span class="badge">바이브 코딩</span>
+      <span class="badge">AI 숏폼 제작</span>
+      <span class="badge">팀 협업</span>
+      <span class="badge">공업고 특화</span>
+      <span class="badge">고등학생</span>
+      <span class="badge b-dark">120분 × 6클래스</span>
+      <span class="badge" style="background:#111;color:#fff;border:1.5px solid #555">📱 스마트폰 기반 숏폼</span>
+    </div>
+
+    <!-- ── 일정 한눈에 보기 ── -->
+    <div class="schedule-overview">
+      <div class="sched-card">
+        <div class="sched-day"> 5월 28일 (목)</div>
+        <div class="sched-row">
+          <div class="sched-num">1</div>
+          <div class="sched-class">1클래스 (1-2교시, 09:00~10:50)</div>
+          <div class="sched-time">1학년(화공)</div>
+        </div>
+        <div class="sched-row">
+          <div class="sched-num">2</div>
+          <div class="sched-class">2클래스 (3-4교시, 11:00~12:50)</div>
+          <div class="sched-time">1학년(전기)</div>
+        </div>
+        <div class="sched-row">
+          <div class="sched-num">3</div>
+          <div class="sched-class">3클래스 (5-6교시, 13:50~15:40)</div>
+          <div class="sched-time">1학년(스마트기계과)</div>
+        </div>
+      </div>
+      <div class="sched-card">
+        <div class="sched-day"> 5월 29일 (금)</div>
+        <div class="sched-row">
+          <div class="sched-num">4</div>
+          <div class="sched-class">4클래스 (1-2교시, 09:00~10:50)</div>
+          <div class="sched-time">2학년(화공)</div>
+        </div>
+        <div class="sched-row">
+          <div class="sched-num">5</div>
+          <div class="sched-class">5클래스 (3-4교시, 11:00~12:50)</div>
+          <div class="sched-time">2학년(전기)</div>
+        </div>
+        <div class="sched-row">
+          <div class="sched-num">6</div>
+          <div class="sched-class">6클래스 (5-6교시, 13:50~15:40)</div>
+          <div class="sched-time">2학년(스마트기계과)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 사전 준비 체크리스트 ── -->
+    <div class="prep-block">
+      <div class="prep-title"> 사전 준비 체크리스트</div>
+
+      <div style="font-size:11px;font-weight:700;color:#555;margin-bottom:6px;letter-spacing:0.4px"> 바이브 코딩
+        체험용</div>
+      <div class="prep-grid" style="margin-bottom:14px">
+        <div class="prep-item">
+          <span class="prep-tag tag-browser">브라우저</span>
+          <span class="prep-name">ChatGPT / Gemini / Claude</span>
+          <span class="prep-desc">코드 작성 AI<br>계정 없어도 기본 사용</span>
+        </div>
+        <div class="prep-item" style="grid-column: span 2; border:1.5px solid #333">
+          <span class="prep-tag tag-install">코딩 환경</span>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <div style="flex:1;min-width:100px;background:#F5F5F5;border-radius:7px;padding:7px 10px">
+              <span style="font-size:11px;font-weight:700;color:#1c1c1a;display:block;margin-bottom:2px"> VS
+                Code</span>
+              <span style="font-size:10px;color:#666;line-height:1.4">code.visualstudio.com<br>AI 확장 설치 포함</span>
+            </div>
+            <div style="flex:1;min-width:100px;background:#F5F5F5;border-radius:7px;padding:7px 10px">
+              <span style="font-size:11px;font-weight:700;color:#1c1c1a;display:block;margin-bottom:2px">
+                Antigravity</span>
+              <span style="font-size:10px;color:#666;line-height:1.4">AI 네이티브 에디터<br>자연어로 코드 생성·수정</span>
+            </div>
+            <div style="flex:1;min-width:100px;background:#F5F5F5;border-radius:7px;padding:7px 10px">
+              <span style="font-size:11px;font-weight:700;color:#1c1c1a;display:block;margin-bottom:2px">
+                OpenCode</span>
+              <span style="font-size:10px;color:#666;line-height:1.4">터미널 기반 Claude CLI<br>파일 자동 읽기·수정</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style="font-size:11px;font-weight:700;color:#111;margin-bottom:6px;letter-spacing:0.4px;border-top:1.5px solid #E5E5E5;padding-top:12px">
+        📱 스마트폰 앱 — 숏폼 제작용 (학생 개인 기기)</div>
+      <div class="prep-grid">
+        <div class="prep-item" style="border:1.5px solid #1c1c1a">
+          <span class="prep-tag tag-install" style="background:#1c1c1a">필수 앱</span>
+          <span class="prep-name">CapCut</span>
+          <span class="prep-desc"> 통합 편집 : 오디오, 배경음악, 이미지, 영상 <br>iOS · Android 무료</span>
+        </div>
+        <div class="prep-item" style="border:1.5px solid #333">
+          <span class="prep-tag tag-install">필수 앱</span>
+          <span class="prep-name">ChatGPT · Gemini · Claude</span>
+          <span class="prep-desc"> 스크립트 + 이미지 생성<br>셋 중 하나 앱 설치·로그인</span>
+        </div>
+        <div class="prep-item">
+          <span class="prep-tag tag-browser">브라우저</span>
+          <span class="prep-name">Typecast AI</span>
+          <span class="prep-desc"> 텍스트 → AI 목소리 변환<br>typecast.ai · 무료 플랜</span>
+        </div>
+        <div class="prep-item">
+          <span class="prep-tag tag-browser">브라우저</span>
+          <span class="prep-name">Suno AI</span>
+          <span class="prep-desc"> AI 배경음악 생성<br>suno.com · 무료 플랜</span>
+        </div>
+        <div class="prep-item">
+          <span class="prep-tag tag-browser">앱+브라우저</span>
+          <span class="prep-name">Grok · Flow</span>
+          <span class="prep-desc"> AI 영상 클립 생성<br>grok.com · flow.google.com</span>
+        </div>
+        <div class="prep-item">
+          <span class="prep-tag tag-free">Plus Alpha</span>
+          <span class="prep-name">Vrew · Alphacut · Viskit</span>
+          <span class="prep-desc">AI 자막·숏폼 자동 완성<br>여유 있을 때 추가 체험</span>
+        </div>
+      </div>
+      <div class="tip-box" style="margin-top:10px">
+        <b>📌 필수 준비물 :</b> 구글 ID · 스마트폰<br>
+        <b>📌 미리 해오기 :</b> CapCut 앱 설치 · ChatGPT / Gemini / Claude 앱 중 하나 설치 & 로그인
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════
+       1교시 · 이론 + 개인 체험
+  ══════════════════════════════════════ -->
+    <div class="period-block theory">
+      <div class="period-header">
+        <span> 1교시 · 이론 + 개인 체험</span>
+        <span class="period-sub">총 50분 &nbsp;·&nbsp; AI 전문가 소개 · 바이브 코딩 · AI 숏폼 제작</span>
+      </div>
+      <div class="period-body">
+
+        <!-- ① AI 전문가 소개 -->
+        <div class="tl-row">
+          <div class="time-col">
+            <span class="time-label">0:00</span>
+            <div class="dot"></div>
+            <div class="seg"></div>
+          </div>
+          <div class="card" style="border-color:#333;border-width:1.5px">
+            <div class="card-head">
+              <span class="card-title"> AI 전문가란? — 직군·역량·진로·현실 조언</span>
+              <span class="dur">10분</span>
+              <span class="badge">오프닝</span>
+            </div>
+
+            <!-- AI 직군 6종 -->
+            <div style="font-size:12px;font-weight:700;color:#111;margin-bottom:8px">⬛ AI 관련 6대 직군 (클릭해서 자세히 보기)</div>
+            <div class="role-grid">
+              <div class="role-chip" data-career="research">
+                <span class="role-name"> AI 연구원</span>
+                <span class="role-desc">새 알고리즘 개발·논문 발표</span>
+              </div>
+              <div class="role-chip" data-career="ml">
+                <span class="role-name"> ML 엔지니어</span>
+                <span class="role-desc">모델 설계·학습·배포</span>
+              </div>
+              <div class="role-chip" data-career="data">
+                <span class="role-name"> 데이터 엔지니어</span>
+                <span class="role-desc">데이터 수집·정제·파이프라인</span>
+              </div>
+              <div class="role-chip" data-career="mlops">
+                <span class="role-name"> MLOps 엔지니어</span>
+                <span class="role-desc">AI 시스템 운영·최적화</span>
+              </div>
+              <div class="role-chip" data-career="pm">
+                <span class="role-name"> AI 제품 PM</span>
+                <span class="role-desc">AI 서비스 기획·관리</span>
+              </div>
+              <div class="role-chip" data-career="robot">
+                <span class="role-name"> 로봇 SW 엔지니어</span>
+                <span class="role-desc">AI+로봇 통합 개발</span>
+              </div>
+            </div>
+
+            <!-- 공업고 전공 연결 -->
+            <div style="font-size:12px;font-weight:700;color:#111;margin:14px 0 6px">⬛ 여러분의 전공 × AI = 최고의 조합</div>
+            <div class="career-grid">
+              <div class="career-chip">
+                <span class="cc-name">⚙️ 기계·금속</span>
+                <span class="cc-skill">AI 품질검사, 예측 유지보수<br>스마트 공장 자동화 로봇</span>
+              </div>
+              <div class="career-chip">
+                <span class="cc-name">⚡ 전기·전자</span>
+                <span class="cc-skill">AI 회로 설계 보조, IoT 제어<br>스마트 그리드 최적화</span>
+              </div>
+              <div class="career-chip">
+                <span class="cc-name">🚗 자동차</span>
+                <span class="cc-skill">자율주행 AI, 결함 자동 진단<br>운전자 보조 시스템(ADAS)</span>
+              </div>
+              <div class="career-chip">
+                <span class="cc-name">🏗️ 건축·토목</span>
+                <span class="cc-skill">드론+AI 측량, 구조 안전 점검<br>BIM 설계 자동화</span>
+              </div>
+              <div class="career-chip">
+                <span class="cc-name">🔬 화학·신소재</span>
+                <span class="cc-skill">AI 신소재 발견, 공정 최적화<br>불량률 예측 시스템</span>
+              </div>
+              <div class="career-chip">
+                <span class="cc-name">🤖 로봇</span>
+                <span class="cc-skill">AI 비전, 협동 로봇(코봇)<br>물류 자동화 로봇 팔</span>
+              </div>
+            </div>
+
+            <!-- 핵심 역량 -->
+            <div style="font-size:12px;font-weight:700;color:#111;margin:14px 0 6px">⬛ AI 전문가 3대 핵심 역량</div>
+            <div class="layer-stack">
+              <div class="layer">
+                <span class="layer-name"> 창의력</span>
+                <span class="layer-desc">문제 발견력 · 아이디어 구체화 · AI 활용 기획력 — 오늘 숏폼 제작이 바로 이 역량</span>
+              </div>
+              <div class="layer">
+                <span class="layer-name"> 수학·통계</span>
+                <span class="layer-desc">AI 알고리즘의 언어 · 선형대수 · 확률·통계 → 중·고 수학이 직접 연결됨</span>
+              </div>
+              <div class="layer">
+                <span class="layer-name"> 프로그래밍</span>
+                <span class="layer-desc">Python · AI 프레임워크 · 데이터 분석 → 오늘 바이브 코딩으로 첫 경험</span>
+              </div>
+            </div>
+
+            <!-- 커리어 로드맵 -->
+            <div style="font-size:12px;font-weight:700;color:#111;margin:14px 0 6px">⬛ AI 전문가 커리어 로드맵</div>
+            <div class="roadmap">
+              <div class="road-step">
+                <div class="road-lv" style="background:#ccc">1</div>
+                <div>
+                  <div class="road-title">Python 기초</div>
+                  <div class="road-detail">변수·반복·함수 — 지금 당장 시작 가능 (유튜브 무료)</div>
+                </div>
+              </div>
+              <div class="road-step">
+                <div class="road-lv" style="background:#999">2</div>
+                <div>
+                  <div class="road-title">ML 라이브러리</div>
+                  <div class="road-detail">pandas · numpy · scikit-learn — 데이터 분석의 기본</div>
+                </div>
+              </div>
+              <div class="road-step">
+                <div class="road-lv" style="background:#666">3</div>
+                <div>
+                  <div class="road-title">딥러닝 프레임워크</div>
+                  <div class="road-detail">PyTorch 또는 TensorFlow — AI 모델 직접 만들기</div>
+                </div>
+              </div>
+              <div class="road-step">
+                <div class="road-lv" style="background:#333">4</div>
+                <div>
+                  <div class="road-title">전공 분야 연계</div>
+                  <div class="road-detail">기계 CV / 전기 IoT AI / 자동차 자율주행 등 전공 특화</div>
+                </div>
+              </div>
+              <div class="road-step">
+                <div class="road-lv" style="background:#111">5</div>
+                <div>
+                  <div class="road-title">포트폴리오 + 경험</div>
+                  <div class="road-detail">GitHub · Kaggle · 공모전 · 특성화고 AI 경진대회</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hl">
+              <b>📌 현실적인 조언:</b> "AI 전문가가 되려면 좋아하는 분야 + AI 기술의 조합이 답입니다. 기계가 좋으면 기계 AI 전문가, 자동차가 좋으면 자동차 AI 전문가. <b>지금
+                배우는 전공이 AI와 합쳐지면 최고의 무기가 됩니다.</b> 지금 이 자리에 앉은 여러분이 5년 뒤 그 자리에 있습니다."
+            </div>
+          </div>
+        </div>
+
+        <!-- ② 바이브 코딩 체험 -->
+        <div class="tl-row">
+          <div class="time-col">
+            <span class="time-label">0:10</span>
+            <div class="dot"></div>
+            <div class="seg"></div>
+          </div>
+          <div class="card" style="border-color:#222;border-width:1.5px">
+            <div class="card-head">
+              <span class="card-title"> 바이브 코딩 체험</span>
+              <span class="dur">20분</span>
+              <span class="badge">핵심 실습 ①</span>
+            </div>
+
+            <div class="vibe-section-label">① 바이브 코딩이란?</div>
+            <div class="vibe-def">
+              <b>바이브 코딩(Vibe Coding)</b>이란, 코딩 지식 없이도 <b>AI에게 자연어로 원하는 것을 설명</b>하면 AI가 코드를 작성해주는 새로운 개발 방식입니다.<br>
+              아이디어만 있으면 누구나 웹사이트·앱·도구를 만들 수 있는 시대가 열렸습니다.
+              <div class="vibe-def-creator">💡 2025년 Andrej Karpathy (OpenAI 공동창업자)가 정의 · 현재 전 세계 개발자 표준 워크플로로 확산</div>
+            </div>
+
+            <div class="vibe-section-label">② 바이브코딩으로 만들 수 있는 것</div>
+            <div class="vibe-types">
+              <div class="vibe-type-card">
+
+                <span class="vtc-name">웹 프로그램</span>
+                <span class="vtc-where">브라우저에서 실행</span>
+                <div class="vtc-tools">
+                  <span class="vtc-tool">HTML</span><span class="vtc-tool">CSS</span><span
+                    class="vtc-tool">JS</span><span class="vtc-tool">React</span>
+                </div>
+                <span class="vtc-ex">▶ 오늘의 프로필 카드</span>
+              </div>
+              <div class="vibe-type-card">
+
+                <span class="vtc-name">윈도우 프로그램</span>
+                <span class="vtc-where">PC에서 실행</span>
+                <div class="vtc-tools">
+                  <span class="vtc-tool">Python</span><span class="vtc-tool">C#</span><span
+                    class="vtc-tool">Electron</span>
+                </div>
+                <span class="vtc-ex">▶ 데스크탑 앱·도구</span>
+              </div>
+              <div class="vibe-type-card">
+
+                <span class="vtc-name">앱 프로그램</span>
+                <span class="vtc-where">스마트폰에서 실행</span>
+                <div class="vtc-tools">
+                  <span class="vtc-tool">React Native</span><span class="vtc-tool">Flutter</span>
+                </div>
+                <span class="vtc-ex">▶ iOS · Android 앱</span>
+              </div>
+            </div>
+
+            <div class="vibe-section-label">③ 실제 개발 로드맵 (아이디어 → 출시)</div>
+            <div class="vibe-rdmap">
+              <div class="vrd-row">
+                <div class="vrd-step" data-rd="brd">
+                  <span class="vrd-num">01</span>
+
+                  <span class="vrd-title">BRD 작성</span>
+                  <span class="vrd-sub">무엇을 왜<br>만드나</span>
+                </div>
+                <div class="vrd-arr">›</div>
+                <div class="vrd-step" data-rd="prd">
+                  <span class="vrd-num">02</span>
+
+                  <span class="vrd-title">PRD 작성</span>
+                  <span class="vrd-sub">기능·화면<br>상세 명세</span>
+                </div>
+                <div class="vrd-arr">›</div>
+                <div class="vrd-step" data-rd="design">
+                  <span class="vrd-num">03</span>
+
+                  <span class="vrd-title">디자인 변경</span>
+                  <span class="vrd-sub">UI·색상·<br>레이아웃</span>
+                </div>
+                <div class="vrd-arr">›</div>
+                <div class="vrd-step" data-rd="api">
+                  <span class="vrd-num">04</span>
+
+                  <span class="vrd-title">기능 연결</span>
+                  <span class="vrd-sub">DB·API<br>통합</span>
+                </div>
+              </div>
+              <div class="vrd-row">
+                <div class="vrd-step" data-rd="trouble">
+                  <span class="vrd-num">05</span>
+
+                  <span class="vrd-title">트러블슈팅</span>
+                  <span class="vrd-sub">오류 디버깅<br>AI에게 질문</span>
+                </div>
+                <div class="vrd-arr">›</div>
+                <div class="vrd-step" data-rd="review">
+                  <span class="vrd-num">06</span>
+
+                  <span class="vrd-title">코드 리뷰</span>
+                  <span class="vrd-sub">AI로 보안·<br>품질 검토</span>
+                </div>
+                <div class="vrd-arr">›</div>
+                <div class="vrd-step hi-deploy" data-rd="deploy">
+                  <span class="vrd-num">07</span>
+
+                  <span class="vrd-title">온라인 배포</span>
+                  <span class="vrd-sub">GitHub<br>Vercel</span>
+                </div>
+                <div class="vrd-arr">›</div>
+                <div class="vrd-step hi-pack" data-rd="package">
+                  <span class="vrd-num">08</span>
+
+                  <span class="vrd-title">앱 패키징</span>
+                  <span class="vrd-sub">스토어<br>등록·배포</span>
+                </div>
+              </div>
+            </div>
+            <div style="font-size:10px;color:#888;margin-bottom:10px">※ BRD = 왜 만드나 · PRD = 어떻게 만드나 &nbsp;·&nbsp; 오늘 실습은
+              <b style="color:#111">01→03→05</b> 단계 체험 · 각 단계 탭하면 상세 설명
+            </div>
+
+            <div class="vibe-section-label">④ 오늘 사용할 도구</div>
+            <div class="vibe-tools">
+              <div class="vibe-tool-card">
+
+                <span class="vt-name">Visual Studio Code</span>
+                <span class="vt-maker">Microsoft · 무료</span>
+                <span class="vt-badge">코드 에디터</span>
+                <ul class="vt-feats">
+                  <li>전 세계 1위 코드 에디터</li>
+                  <li>GitHub Copilot · Claude 확장 지원</li>
+                  <li>HTML·Python·JS 모든 언어</li>
+                  <li>오늘 실습 기본 도구</li>
+                </ul>
+                <span class="vt-target"> 입문자 최우선 추천</span>
+              </div>
+              <div class="vibe-tool-card">
+
+                <span class="vt-name">Antigravity</span>
+                <span class="vt-maker">AI 네이티브 에디터</span>
+                <span class="vt-badge">AI 전용 IDE</span>
+                <ul class="vt-feats">
+                  <li>AI 중심으로 설계된 코드 에디터</li>
+                  <li>자연어로 코드 생성·수정·설명</li>
+                  <li>멀티파일 동시 AI 편집 지원</li>
+                  <li>프로젝트 전체를 AI가 이해</li>
+                </ul>
+                <span class="vt-target"> 바이브코딩 전용 환경</span>
+              </div>
+              <div class="vibe-tool-card">
+
+                <span class="vt-name">Opencode</span>
+                <span class="vt-maker">오픈소스 · 무료</span>
+                <span class="vt-badge">터미널 CLI</span>
+                <ul class="vt-feats">
+                  <li>터미널에서 실행하는 AI 코딩 도구</li>
+                  <li>Claude · GPT 등 다양한 AI 연결</li>
+                  <li>파일 읽기·수정·실행 자동화</li>
+                  <li>개발자 워크플로 최적화</li>
+                </ul>
+                <span class="vt-target"> 코딩 숙련자 추천</span>
+              </div>
+            </div>
+
+            <div class="vibe-section-label">⑤ 바이브 코딩 3원칙</div>
+            <div class="vibe-intro">
+              <div class="vibe-pill">
+
+                <span class="vp-title">① 구체적으로 말하기</span>
+                상황·조건·형식을<br>정확히 설명하기
+              </div>
+              <div class="vibe-pill">
+
+                <span class="vp-title">② 바로 실행해 확인</span>
+                코드 복사 →<br>브라우저에서 열기
+              </div>
+              <div class="vibe-pill">
+
+                <span class="vp-title">③ 오류는 AI에게</span>
+                에러 메시지 복사 →<br>다시 물어보기
+              </div>
+            </div>
+
+            <div class="vibe-section-label">⑥ 실습 미션 — 나만의 AI 프로필 카드 만들기 (15분)</div>
+            <div class="mission-row">
+              <div class="mission-pill">
+                <span class="mp-star">⭐ 기본</span>
+                <span class="mp-text">이름·학교·전공이 담긴 프로필 카드</span>
+                <span class="mp-desc">배경색·글꼴·아이콘이 있는 HTML 페이지</span>
+              </div>
+              <div class="mission-pill">
+                <span class="mp-star">⭐⭐ 도전</span>
+                <span class="mp-text">애니메이션 + 장래희망 추가</span>
+                <span class="mp-desc">hover 효과·버튼·자기소개 문장 포함</span>
+              </div>
+              <div class="mission-pill">
+                <span class="mp-star">⭐⭐⭐ 심화</span>
+                <span class="mp-text">팀원 소개 갤러리 페이지</span>
+                <span class="mp-desc">카드 그리드·클릭 시 상세 정보 표시</span>
+              </div>
+            </div>
+
+            <div class="prompt-ex">
+              <span class="pe-label">💬 Claude / ChatGPT에 복사해서 사용하세요 (기본 미션)</span>
+              <span class="pe-text">
+                "내 이름은 [이름], 목포공업고등학교 [학과]과 [학년]이야.
+                나를 소개하는 멋진 HTML 프로필 카드를 만들어줘.
+                카드 안에는 이름, 학교, 학과, 장래희망, 좋아하는 것 3가지를 포함하고,
+                어두운 배경에 흰 글씨, 카드에 둥근 모서리와 그림자 효과를 적용해줘.
+                마우스를 올리면 카드가 살짝 올라오는 애니메이션도 넣어줘."
+              </span>
+            </div>
+
+            <div class="vibe-flow">
+              <span class="vf-step">AI에게 요청</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step">코드 복사</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step">VS Code 붙여넣기</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step">브라우저로 열기</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step">결과 확인</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step">수정 요청</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step" style="font-weight:700">반복!</span>
+            </div>
+
+            <div class="tip-box" style="margin-top:10px">
+              <b>📌 강사 포인트:</b> "코딩 모른다고 못 하는 게 아닙니다. AI에게 잘 설명하는 능력이 이제 최고의 코딩 실력입니다. 여러분이 오늘 만든 프로필 카드는 진짜 웹사이트입니다.
+              집에서 친구한테 링크 보내줄 수 있어요."
+            </div>
+            <span class="theory-link">📌 이론 연결: 바이브 코딩 사이클 = AI 학습 사이클 (요청→생성→검증→피드백) 과 동일한 구조</span>
+          </div>
+        </div>
+
+        <!-- ③ AI 숏폼 파이프라인 탐색 — 도구 체험 -->
+        <div class="tl-row">
+          <div class="time-col">
+            <span class="time-label">0:30</span>
+            <div class="dot"></div>
+          </div>
+          <div class="card" style="border-color:#444;border-width:1.5px">
+            <div class="card-head">
+              <span class="card-title"> AI 숏폼 제작 — 도구 탐색 & 체험</span>
+              <span class="dur">20분</span>
+              <span class="badge">핵심 실습 ②</span>
+            </div>
+
+            <div class="vibe-section-label">① 팀 숏폼 제작 파이프라인 (15~180초)</div>
+            <div class="vibe-def">
+              2교시 팀 협업에서 만들 <b>AI 숏폼</b>의 전체 흐름을 먼저 파악합니다.<br>
+              지금은 <b>각자 맡고 싶은 역할의 도구를 미리 체험</b>해보는 시간입니다.
+              <div class="vibe-def-creator"> 스마트폰 하나로 스크립트 → 목소리 → 배경음악 → 이미지/영상 → 편집 → 완성!</div>
+            </div>
+
+            <div class="vibe-flow">
+              <span class="vf-step"> 스크립트</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step"> 나래이터</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step"> 배경음악</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step"> 이미지/영상</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step"> CapCut 통합편집</span>
+              <span class="vf-arrow">›</span>
+              <span class="vf-step">완성!</span>
+            </div>
+
+            <div class="vibe-section-label">② 역할별 도구 미리 체험 (각 3~4분씩 자유 탐색)</div>
+            <div class="prod-roles">
+
+              <div class="prod-role">
+                <div class="prod-role-head">
+                  <div class="prod-num">1</div>
+                  <span class="prod-title"> 스크립트 — AI 대본 생성</span>
+                  <div class="prod-tools">
+                    <span class="prod-tool-tag">ChatGPT</span>
+                    <span class="prod-tool-tag t-alt">Gemini</span>
+                    <span class="prod-tool-tag t-sub">Claude</span>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-desc">셋 중 하나 앱 열기 → 아래 프롬프트 입력 → 장면별 대사·화면 설명 생성 → 메모장 저장</div>
+                  <div class="prompt-ex" style="margin-top:6px">
+                    <span class="pe-label">체험용 프롬프트</span>
+                    <span class="pe-text">"[내 전공] 학생이 AI를 활용하는 30초 숏폼 스크립트, 장면 5개, 각 장면에 자막+화면설명 포함해줘"</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="prod-role">
+                <div class="prod-role-head">
+                  <div class="prod-num">2</div>
+                  <span class="prod-title"> 나래이터 — AI 목소리 생성</span>
+                  <div class="prod-tools">
+                    <span class="prod-tool-tag">Typecast AI</span>
+                    <span class="prod-tool-tag t-alt">셀프 녹음</span>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-desc"><b>Typecast AI (typecast.ai)</b> — 브라우저 접속 → 텍스트 한 줄 입력 → AI 목소리 선택 → 재생
+                    체험<br>또는 스마트폰 기본 녹음 앱으로 짧은 문장 셀프 녹음 후 들어보기</div>
+                </div>
+              </div>
+
+              <div class="prod-role">
+                <div class="prod-role-head">
+                  <div class="prod-num">3</div>
+                  <span class="prod-title"> 배경음악 — AI 작곡</span>
+                  <div class="prod-tools">
+                    <span class="prod-tool-tag">Suno AI</span>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-desc"><b>Suno AI (suno.com)</b> — 브라우저 접속 → 분위기·장르·키워드 입력 → 30초 배경음악 생성 → 감상</div>
+                  <div class="prompt-ex" style="margin-top:6px">
+                    <span class="pe-label">체험용 프롬프트</span>
+                    <span class="pe-text">"energetic motivational background music, Korean youth tech video, upbeat, no
+                      lyrics, 30 seconds"</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="prod-role">
+                <div class="prod-role-head">
+                  <div class="prod-num">4</div>
+                  <span class="prod-title"> 이미지/영상 생성</span>
+                  <div class="prod-tools">
+                    <span class="prod-tool-tag">Gemini</span>
+                    <span class="prod-tool-tag t-alt">ChatGPT</span>
+                    <span class="prod-tool-tag t-sub">Grok</span>
+                    <span class="prod-tool-tag t-sub">Flow</span>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-desc">
+                    <b>이미지:</b> Gemini 앱 → "이미지 생성해줘" 또는 ChatGPT 앱 → "그림 그려줘" → 갤러리 저장 체험<br>
+                    <b>영상:</b> Grok (grok.com) 또는 Flow (flow.google.com) → 텍스트→영상 변환 체험
+                  </div>
+                </div>
+              </div>
+
+              <div class="prod-role">
+                <div class="prod-role-head">
+                  <div class="prod-num">5</div>
+                  <span class="prod-title"> 편집 — CapCut 기본 조작</span>
+                  <div class="prod-tools">
+                    <span class="prod-tool-tag">CapCut</span>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-desc">CapCut 앱 → 새 프로젝트 → 갤러리 이미지 1~2장 불러오기 → AI 자동 자막 탭 탐색 → 배경음악 탭 탐색 → 기본 메뉴 파악
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="tip-box" style="margin-top:10px">
+              <b>📌 지금 할 것:</b> 앱 설치 확인 · Wi-Fi 연결 · 배터리 50%+ 확인 · 맡고 싶은 역할 생각해두기 (2교시 팀 구성 때 발표 예정)<br>
+              <b>📌주제 힌트:</b> ① "우리 전공 + AI = 미래 직업" &nbsp;|&nbsp; ② "AI가 바꾸는 [내 전공] 현장" &nbsp;|&nbsp; ③ "10년 후 내 직업의
+              하루"
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /1교시 -->
+
+
+    <!-- ── 휴식 ── -->
+    <div class="break-block">
+      <span> 휴식</span>
+      <span style="font-size:13px;color:#aaa;font-weight:400">화장실·물·자유 시간 — 팀 구성 미리 공지</span>
+      <span class="break-time">0:50 — 1:00 · 10분</span>
+    </div>
+
+
+    <!-- ══════════════════════════════════════
+       2교시 · 팀 협업 + 발표 + 마무리
+  ══════════════════════════════════════ -->
+    <div class="period-block practice">
+      <div class="period-header">
+        <span> 2교시 · 팀 협업 + 발표 + 마무리</span>
+        <span class="period-sub">총 60분 &nbsp;·&nbsp; AI 숏폼 완성 · 팀 발표 · QR 설문</span>
+      </div>
+      <div class="period-body">
+
+        <!-- ④ 팀 협업 -->
+        <div class="tl-row">
+          <div class="time-col">
+            <span class="time-label">1:00</span>
+            <div class="dot"></div>
+            <div class="seg"></div>
+          </div>
+          <div class="card" style="border-color:#222;border-width:1.5px">
+            <div class="card-head">
+              <span class="card-title"> 팀 협업 — AI 숏폼 완성 (5명)</span>
+              <span class="dur">40분</span>
+              <span class="badge">팀 프로젝트</span>
+              <span class="badge b-dark">팀 5명</span>
+            </div>
+
+            <div class="vibe-section-label">① 공동 기획 — 팀원 합의 (5분)</div>
+            <div class="planning-box">
+              <div class="planning-box-title">🗓 공동 기획 4단계</div>
+              <div class="planning-grid">
+                <div class="planning-item">
+                  <div class="planning-step">STEP 1</div>
+                  <div class="planning-title">주제 결정</div>
+                  <div class="planning-desc">팀원 투표 → 우리 전공 × AI 교차점 선택</div>
+                </div>
+                <div class="planning-item">
+                  <div class="planning-step">STEP 2</div>
+                  <div class="planning-title">콘티 짜기</div>
+                  <div class="planning-desc">장면 수 · 흐름 · 분위기 메모 (스마트폰 메모장)</div>
+                </div>
+                <div class="planning-item">
+                  <div class="planning-step">STEP 3</div>
+                  <div class="planning-title">팀 구성 & 역할 분담</div>
+                  <div class="planning-desc">5개 역할 자율 배분 (아래 역할 카드 참고)</div>
+                </div>
+                <div class="planning-item">
+                  <div class="planning-step">STEP 4</div>
+                  <div class="planning-title">팀 단톡방 개설</div>
+                  <div class="planning-desc">카카오톡 그룹채팅 개설 → 소스 파일 공유용</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="vibe-section-label">② 5인 역할 분담 & AI 도구 (30분 동시 제작)</div>
+            <div class="prod-roles">
+
+              <div class="prod-role">
+                <div class="prod-role-head">
+                  <div class="prod-num">1</div>
+                  <span class="prod-title"> 스크립트 — AI 프롬프트 활용 대본 만들기</span>
+                  <div class="prod-tools">
+                    <span class="prod-tool-tag">ChatGPT</span>
+                    <span class="prod-tool-tag t-alt">Gemini</span>
+                    <span class="prod-tool-tag t-sub">Claude</span>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-desc">프롬프트로 장면별 대사·화면 설명 생성 → 단톡방에 텍스트 공유 (나래이터·이미지 담당이 활용)</div>
+                  <div class="prompt-ex" style="margin-top:6px">
+                    <span class="pe-label">팀 스크립트 프롬프트</span>
+                    <span class="pe-text">"우리 팀 주제: [주제] / 대상: 목포공업고 학생 / 45초 숏폼 스크립트 / 장면 6개
+                      형식: 장면번호 | 자막(대사) | 화면설명 | 이미지 프롬프트(영문) / 마지막 장면 임팩트 한 줄 결론"</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="prod-role">
+                <div class="prod-role-head">
+                  <div class="prod-num">2</div>
+                  <span class="prod-title"> 나래이터 — 텍스트를 목소리로</span>
+                  <div class="prod-tools">
+                    <span class="prod-tool-tag">Typecast AI</span>
+                    <span class="prod-tool-tag t-alt">셀프 녹음 + AI 음질 개선</span>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-desc">
+                    <b>Option A — Typecast AI:</b> typecast.ai 접속 → 스크립트 대사 입력 → AI 목소리 선택 → MP3 다운로드 → 단톡방 전송<br>
+                    <b>Option B — 셀프 녹음:</b> 기본 녹음 앱으로 대사 녹음 → CapCut 내 "음질 개선" AI 기능 적용 → 편집 담당에게 전송
+                  </div>
+                </div>
+              </div>
+
+              <div class="prod-role">
+                <div class="prod-role-head">
+                  <div class="prod-num">3</div>
+                  <span class="prod-title"> 배경음악 — AI 작곡</span>
+                  <div class="prod-tools">
+                    <span class="prod-tool-tag">Suno AI</span>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-desc">suno.com 접속 → 영상 분위기에 맞는 음악 생성 (가사 없음, 30~60초) → MP3 다운로드 → 단톡방 전송</div>
+                  <div class="prompt-ex" style="margin-top:6px">
+                    <span class="pe-label">Suno 프롬프트 예시</span>
+                    <span class="pe-text">"upbeat tech background music, motivational, no vocals, Korean youth education
+                      short video, 45 seconds"</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="prod-role">
+                <div class="prod-role-head">
+                  <div class="prod-num">4</div>
+                  <span class="prod-title"> 이미지 생성 / 영상 생성</span>
+                  <div class="prod-tools">
+                    <span class="prod-tool-tag">Gemini</span>
+                    <span class="prod-tool-tag t-alt">ChatGPT</span>
+                    <span class="prod-tool-tag t-sub">Grok</span>
+                    <span class="prod-tool-tag t-sub">Flow</span>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-desc">
+                    <b>이미지 생성:</b> Gemini 앱 / ChatGPT 앱 → 스크립트 화면설명 기반 이미지 생성 → 갤러리 저장 → 단톡방 전송<br>
+                    <b>영상 생성:</b> Grok (grok.com) 또는 Flow (flow.google.com) → 장면 설명 입력 → 짧은 클립 생성 → 단톡방 전송
+                  </div>
+                </div>
+              </div>
+
+              <div class="prod-role">
+                <div class="prod-role-head">
+                  <div class="prod-num">5</div>
+                  <span class="prod-title"> 편집 — CapCut 통합 완성</span>
+                  <div class="prod-tools">
+                    <span class="prod-tool-tag">CapCut</span>
+                  </div>
+                </div>
+                <div class="prod-body">
+                  <div class="prod-desc">단톡방에서 소스 파일(이미지·음성·음악) 수신 → CapCut 새 프로젝트 → 클립 배치 → 나래이터 오디오 삽입 → 배경음악 추가 → AI
+                    자막 자동생성 → 효과·전환 적용 → 1080p 내보내기 → 단톡방 완성본 공유</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="vibe-section-label">③ Plus Alpha — 더 빠르게, 더 완성도 높게, 여유 있을 때 시도</div>
+            <div class="plus-alpha-box">
+              <div class="pa-title">Plus Alpha — 더 빠르게, 더 완성도 높게</div>
+              <div class="pa-tools">
+                <div class="pa-tool">
+                  <span class="pa-tool-name">Vrew AI</span>
+                  <span class="pa-tool-desc">AI 자동 자막·편집<br>PC 버전 추천</span>
+                </div>
+                <div class="pa-tool">
+                  <span class="pa-tool-name">Alphacut AI</span>
+                  <span class="pa-tool-desc">롱폼 영상을<br>숏폼으로 자동 변환</span>
+                </div>
+                <div class="pa-tool">
+                  <span class="pa-tool-name">Viskit AI</span>
+                  <span class="pa-tool-desc">텍스트 입력만으로<br>숏폼 자동 완성</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="vibe-section-label">④ Next Level — AI 자동화</div>
+            <div class="next-level-box">
+              <div class="nl-title"> Next Level · AI 자동화 도구</div>
+              <div class="nl-row">
+                <div class="nl-item">
+                  <span class="nl-name">Opal</span>
+                  <span class="nl-desc">AI 에이전트로 콘텐츠 파이프라인 완전 자동화</span>
+                </div>
+                <div class="nl-item">
+                  <span class="nl-name">n8n</span>
+                  <span class="nl-desc">노코드 워크플로우 자동화 — AI 도구들을 연결해 자동 제작</span>
+                </div>
+                <div class="nl-item">
+                  <span class="nl-name">Vibe Coding Program</span>
+                  <span class="nl-desc">나만의 숏폼 자동화 프로그램을 AI와 함께 직접 제작</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="vibe-section-label">⑤ 완성 영상 공유 & 제출</div>
+            <div class="submit-box">
+              <div class="submit-title"> Padlet QR 화면 → 발표 겸 제출 → 강사 드라이브 일괄 다운로드</div>
+              <div class="submit-flow">
+                <span class="submit-step">CapCut 1080p 내보내기</span>
+                <span class="submit-arrow">›</span>
+                <span class="submit-step">Padlet QR 스캔</span>
+                <span class="submit-arrow">›</span>
+                <span class="submit-step">영상 업로드</span>
+                <span class="submit-arrow">›</span>
+                <span class="submit-step">팀명 · 주제 입력</span>
+                <span class="submit-arrow">›</span>
+                <span class="submit-step">프로젝터 전체 공개 (발표용)</span>
+                <span class="submit-arrow">›</span>
+                <span class="submit-step">강사 드라이브 일괄 저장</span>
+              </div>
+            </div>
+
+            <div class="tip-box" style="margin-top:10px">
+              <b>📌 팀 협업 성공 팁:</b><br>
+              · 편집 담당 배터리 여유 필수 · 카톡 파일 전송 시 "원본 화질"로 보내기 · CapCut 느리면 이미지 5장 이내로 줄이기<br>
+              · Wi-Fi 끊기면 편집 담당 핫스팟 ON · AI 이미지가 이상하면 프롬프트 더 구체적으로 수정 후 재시도
+            </div>
+          </div>
+        </div>
+
+        <!-- ⑤ 팀 발표 & 피드백 -->
+        <div class="tl-row">
+          <div class="time-col">
+            <span class="time-label">1:40</span>
+            <div class="dot"></div>
+            <div class="seg"></div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title"> 팀 발표 & 강사 피드백</span>
+              <span class="dur">15분</span>
+              <span class="badge">발표</span>
+            </div>
+
+            <div class="vibe-section-label">① 발표 형식</div>
+            <ul class="items">
+              <li><b>영상 상영:</b> Padlet 화면 프로젝터에 띄워두고 → 팀 Padlet 게시물 클릭 → 전체 화면 재생 (팀당 최대 1분)</li>
+              <li><b>발표 시간:</b> 팀당 2~3분 — 영상 상영 후 팀 소개 1~2분</li>
+              <li><b>발표 내용:</b> ① 선택한 주제와 이유 &nbsp; ② 사용한 AI 도구 &nbsp; ③ 가장 어려웠던 점 &nbsp; ④ 오늘 배운 것</li>
+              <li><b>발표자:</b> 지정된 발표 담당 1명 (팀원 모두 앞에 나와도 OK)</li>
+              <li><b>피드백:</b> 강사 피드백 + 반 친구들 한 마디 (긍정적 포인트 위주)</li>
+            </ul>
+
+            <div class="vibe-section-label">② 결과물 평가 포인트</div>
+            <div class="eval-grid">
+              <div class="eval-item">
+                <span class="eval-name"> 창의성</span>
+                <span class="eval-desc">주제가 독창적인가?<br>AI를 창의적으로 활용했는가?</span>
+                <span class="eval-score">핵심 평가 항목</span>
+              </div>
+              <div class="eval-item">
+                <span class="eval-name"> 협업</span>
+                <span class="eval-desc">5명이 고르게 참여했는가?<br>역할 분담이 잘 이뤄졌는가?</span>
+                <span class="eval-score">핵심 평가 항목</span>
+              </div>
+              <div class="eval-item">
+                <span class="eval-name"> 완성도</span>
+                <span class="eval-desc">영상이 완성되었는가?<br>자막·음악이 어울리는가?</span>
+                <span class="eval-score">보조 평가 항목</span>
+              </div>
+              <div class="eval-item">
+                <span class="eval-name"> 발표</span>
+                <span class="eval-desc">제작 과정을 잘 설명했는가?<br>배운 점을 말할 수 있는가?</span>
+                <span class="eval-score">보조 평가 항목</span>
+              </div>
+            </div>
+
+            <div class="hl">
+              <b>📌 피드백 원칙:</b> "잘한 점 먼저, 개선점은 나중에. 결과물 완성도보다 AI를 써봤다는 과정이 더 중요합니다. 완성이 안 됐어도 괜찮습니다 — 어떤 AI 도구를 왜 썼는지
+              설명할 수 있으면 충분합니다."
+            </div>
+          </div>
+        </div>
+
+        <!-- ⑥ QR + 마무리 -->
+        <div class="tl-row">
+          <div class="time-col">
+            <span class="time-label">1:55</span>
+            <div class="dot"></div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title"> QR 코드 + 마무리</span>
+              <span class="dur">5분</span>
+              <span class="badge">마무리</span>
+            </div>
+            <ul class="items">
+              <li><b>설문조사 QR (2분):</b> 스마트폰으로 QR 스캔 → 만족도·오늘의 Best 실습·다음에 배우고 싶은 것</li>
+              <li><b>Padlet 최종 확인 (1분):</b> 강사 화면에서 전 팀 제출 확인 — 미제출 팀 즉시 업로드 (발표 때 Padlet으로 제출 완료된 팀은 통과)</li>
+              <li><b>마지막 한 마디 (2분):</b> 강사 마무리 메시지</li>
+            </ul>
+            <div class="hl">
+              <b>📌 마지막 메시지:</b> "여러분은 오늘 AI로 코드를 짜고, 영상을 만들었습니다. 이미 인공지능 전문가의 첫 발을 내딛은 겁니다. 앞으로 여러분의 전공에 AI를 더하면 최고의
+              전문가가
+              됩니다. 당신의 내일을 응원 합니다"
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /2교시 -->
+
+
+    <!-- ── Summary ── -->
+    <div class="sum-row">
+      <div class="sum">
+        <div class="sum-l">총 시간</div>
+        <div class="sum-v">120분 (2교시)</div>
+      </div>
+      <div class="sum">
+        <div class="sum-l">AI 전문가 소개</div>
+        <div class="sum-v">10분</div>
+      </div>
+      <div class="sum">
+        <div class="sum-l">바이브 코딩 체험</div>
+        <div class="sum-v">20분</div>
+      </div>
+      <div class="sum">
+        <div class="sum-l">AI 숏폼 (개인)</div>
+        <div class="sum-v">20분</div>
+      </div>
+      <div class="sum">
+        <div class="sum-l">팀 협업 완성</div>
+        <div class="sum-v hi">40분 · 5명 팀</div>
+      </div>
+      <div class="sum">
+        <div class="sum-l">발표 + 마무리</div>
+        <div class="sum-v">20분</div>
+      </div>
+    </div>
+
+  </div><!-- /wrap -->
+
+
+  <!-- ── Roadmap Detail Popup ── -->
+  <div class="rd-overlay" id="rdOverlay">
+    <div class="rd-modal">
+      <div class="rd-header">
+        <div>
+          <div class="rd-step-num" id="rdStepNum"></div>
+          <div class="rd-title" id="rdTitle"></div>
+          <div class="rd-sub" id="rdSub"></div>
+        </div>
+        <button class="rd-close" onclick="document.getElementById('rdOverlay').classList.remove('open')">✕</button>
+      </div>
+      <div class="rd-body" id="rdBody"></div>
+    </div>
+  </div>
+
+  <!-- ── Career Modal ── -->
+  <div class="modal-overlay" id="careerModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-icon" id="mIcon"></span>
+        <div>
+          <div class="modal-title" id="mTitle"></div>
+          <div class="modal-sub" id="mSub"></div>
+        </div>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body" id="mBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const CAREERS = {
+      research: {
+        icon: '🔬', title: 'AI 연구원', sub: 'AI Researcher · 새로운 지식을 만드는 사람',
+        work: [
+          '새로운 딥러닝 알고리즘·모델 구조 설계 및 실험',
+          '연구 결과를 논문으로 작성해 학회(NeurIPS·ICML 등) 발표',
+          '제조·공학 분야 특화 AI 알고리즘 연구 개발',
+        ],
+        skills: ['수학 (선형대수·확률통계)', 'Python', 'PyTorch / JAX', '논문 읽기·쓰기', '실험 설계'],
+        companies: ['Google DeepMind', 'OpenAI', 'KAIST·서울대 AI 연구실', '삼성·LG·현대 AI Lab'],
+        salaryJunior: '5,000 ~ 7,000만원', salarySenior: '1억 원 이상',
+        tip: '박사 학위가 유리하지만 필수는 아닙니다. 좋은 논문 1편이 이력서 전체보다 강력합니다.',
+        todayLink: '오늘 바이브 코딩 사이클 = 요청→생성→검증→피드백 = AI 연구의 실험→분석→개선 사이클과 동일'
+      },
+      ml: {
+        icon: '⚙️', title: 'ML 엔지니어', sub: 'Machine Learning Engineer · AI를 제품으로 만드는 사람',
+        work: [
+          '모델 설계·학습·성능 튜닝 및 최적화',
+          '학습된 모델을 실제 서비스에 배포 (추론 서버 구축)',
+          '공장·제조 현장의 AI 결함 검사 모델 개발',
+        ],
+        skills: ['Python', 'PyTorch / TensorFlow', '모델 최적화 (양자화·프루닝)', '클라우드 (AWS·GCP)', 'Git / Docker'],
+        companies: ['삼성·LG·현대', '카카오·네이버·쿠팡', 'AI 스타트업', '자율주행·스마트팩토리 기업'],
+        salaryJunior: '4,500 ~ 6,500만원', salarySenior: '8,000만원 ~ 1억+',
+        tip: 'Kaggle 수상 경력·GitHub 프로젝트가 취업 결정의 핵심입니다. 학벌보다 포트폴리오!',
+        todayLink: '바이브 코딩으로 AI에게 코드를 요청 → 검증 → 수정하는 흐름 = ML 엔지니어의 실제 개발 흐름'
+      },
+      data: {
+        icon: '🗄️', title: '데이터 엔지니어', sub: 'Data Engineer · AI의 밥을 만드는 사람',
+        work: [
+          '데이터 수집·정제·변환 파이프라인(ETL) 구축',
+          '대용량 데이터를 안정적으로 저장·제공하는 인프라 설계',
+          '공장 센서 데이터 실시간 수집 및 분석 시스템 구축',
+        ],
+        skills: ['SQL / NoSQL', 'Python', 'Apache Spark · Kafka', '클라우드 데이터웨어하우스', 'Airflow'],
+        companies: ['금융·이커머스·SNS 등 데이터 기반 모든 기업', '네이버·카카오·토스·쿠팡'],
+        salaryJunior: '4,000 ~ 6,000만원', salarySenior: '7,500만원 이상',
+        tip: '"좋은 AI는 좋은 데이터에서 나온다." AI가 잘못된 결과를 낼 때 80%는 데이터 문제입니다.',
+        todayLink: '오늘 숏폼 제작에서 모은 이미지·스크립트·영상 = 데이터 엔지니어가 설계한 데이터 구조의 실제 예시'
+      },
+      mlops: {
+        icon: '🛠️', title: 'MLOps 엔지니어', sub: 'MLOps Engineer · AI를 24시간 살아있게 하는 사람',
+        work: [
+          'AI 모델 자동 학습·배포 파이프라인 구축 및 운영',
+          '서비스 중인 모델 성능 모니터링·이상 탐지',
+          'GPU 서버·클라우드 인프라 관리 및 비용 최적화',
+        ],
+        skills: ['Docker / Kubernetes', 'CI/CD (GitHub Actions)', 'MLflow · Kubeflow', '클라우드 (AWS SageMaker)', '모니터링 (Prometheus·Grafana)'],
+        companies: ['대형 AI 서비스 운영 기업', '플랫폼·핀테크·커머스 AI팀', '스마트팩토리 운영사'],
+        salaryJunior: '4,500 ~ 6,500만원', salarySenior: '8,000만원 이상',
+        tip: '2020년대 가장 빠르게 수요가 증가한 직종. 개발+운영 모두 할 수 있어야 합니다.',
+        todayLink: '오늘 숏폼을 "실행·검증·재출력"하는 과정 = MLOps의 CI/CD 자동화 파이프라인과 같은 구조'
+      },
+      pm: {
+        icon: '📋', title: 'AI 제품 PM', sub: 'AI Product Manager · AI 서비스를 기획하는 사람',
+        work: [
+          '사용자 요구사항 분석 → AI 기능 기획 → 개발팀 협업',
+          '데이터 기반 의사결정, A/B 테스트 설계',
+          'AI 서비스 출시 전략·로드맵 수립',
+        ],
+        skills: ['서비스 기획 능력', '데이터 분석 (SQL 기초)', 'AI 기술 이해', 'UX 감각', '커뮤니케이션·스토리텔링'],
+        companies: ['카카오·네이버·라인', 'AI 스타트업 전반', '삼성·LG·현대 디지털 서비스팀'],
+        salaryJunior: '4,000 ~ 5,500만원', salarySenior: '7,000만원 ~ 1억+',
+        tip: '코딩 능력보다 "AI로 어떤 문제를 풀 것인가"를 명확히 설명할 수 있는 능력이 핵심입니다.',
+        todayLink: '오늘 팀 협업에서 주제를 결정하고 역할을 분배하는 기획자 역할 = AI PM의 핵심 업무'
+      },
+      robot: {
+        icon: '🤖', title: '로봇 SW 엔지니어', sub: 'Robot SW Engineer · AI와 로봇을 연결하는 사람',
+        work: [
+          'ROS(로봇 운영체제) 기반 소프트웨어 개발',
+          'AI 비전·강화학습을 로봇 하드웨어와 통합',
+          '센서 데이터 처리, 경로 계획, 매니퓰레이터 제어',
+        ],
+        skills: ['C++ / Python', 'ROS / ROS2', '컴퓨터 비전 (OpenCV·YOLO)', '강화학습 (RL)', '임베디드 시스템'],
+        companies: ['현대로보틱스·삼성로봇', '보스턴다이나믹스·Figure AI', '자율주행 스타트업', '스마트팩토리 기업'],
+        salaryJunior: '4,500 ~ 6,500만원', salarySenior: '8,000만원 이상',
+        tip: '로봇 + AI 두 분야를 모두 아는 사람이 극히 드뭅니다. 공업고 전공 배경이 최고의 경쟁력입니다!',
+        todayLink: '오늘 숏폼의 "로봇 AI" 주제 = 여러분의 전공과 AI를 연결한 첫 번째 포트폴리오 소재'
+      }
+    };
+
+    function openModal(key) {
+      const d = CAREERS[key];
+      if (!d) return;
+      document.getElementById('mIcon').textContent = d.icon;
+      document.getElementById('mTitle').textContent = d.title;
+      document.getElementById('mSub').textContent = d.sub;
+      const skillChips = d.skills.map(s => `<span class="modal-chip accent">${s}</span>`).join('');
+      const compChips = d.companies.map(c => `<span class="modal-chip">${c}</span>`).join('');
+      const workItems = d.work.map(w => `<li>${w}</li>`).join('');
+      document.getElementById('mBody').innerHTML = `
+      <div>
+        <div class="modal-section-title">주요 업무</div>
+        <div class="modal-work"><ul>${workItems}</ul></div>
+      </div>
+      <div>
+        <div class="modal-section-title">필수 기술</div>
+        <div class="modal-chips">${skillChips}</div>
+      </div>
+      <div>
+        <div class="modal-section-title">주요 취업처</div>
+        <div class="modal-chips">${compChips}</div>
+      </div>
+      <div>
+        <div class="modal-section-title">예상 연봉</div>
+        <div class="salary-bar">
+          <div class="salary-item"><div class="salary-lv">주니어 (0~3년)</div><div class="salary-val">${d.salaryJunior}</div></div>
+          <div class="salary-item"><div class="salary-lv">시니어 (5년+)</div><div class="salary-val">${d.salarySenior}</div></div>
+        </div>
+      </div>
+      <div class="modal-tip">💡 <b>강사 조언:</b> ${d.tip}</div>
+      <div style="background:#F2F2F2;border-radius:9px;padding:9px 12px;font-size:12px;color:#333;line-height:1.6">
+        🔗 <b>오늘 수업 연결:</b> ${d.todayLink}
+      </div>
+    `;
+      document.getElementById('careerModal').classList.add('open');
+    }
+
+    document.querySelectorAll('.role-chip[data-career]').forEach(el => {
+      el.addEventListener('click', () => openModal(el.dataset.career));
+    });
+    document.getElementById('modalClose').addEventListener('click', () => {
+      document.getElementById('careerModal').classList.remove('open');
+    });
+    document.getElementById('careerModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.getElementById('careerModal').classList.remove('open');
+        document.getElementById('rdOverlay').classList.remove('open');
+      }
+    });
+
+    // ── 로드맵 단계별 팝업 ──
+    const RD = {
+      brd: {
+        num: 'STEP 01', icon: '📋', title: 'BRD 작성',
+        sub: 'Business Requirements Document — 사업 요구사항 정의서',
+        def: '"무엇을, 왜 만드는가"를 정의하는 문서입니다. 개발 시작 전 방향을 잡아주는 나침반 역할을 합니다. BRD를 먼저 쓰면 나중에 헤매지 않습니다.',
+        items: [['문제 정의', '어떤 불편함을 해결하는가?'], ['목표 사용자', '누가 이 제품을 쓰는가?'], ['핵심 기능', '반드시 있어야 할 기능은?'], ['성공 기준', '언제 성공했다고 할 수 있나?']],
+        tools: ['Claude', 'ChatGPT', 'Notion AI'],
+        prompt: `"학생이 매번 스마트폰으로 출석을 부르는 불편함을 해결하는\nAI 얼굴인식 출석 앱 아이디어로 BRD를 작성해줘.\n문제 정의, 목표 사용자, 핵심 기능, 성공 기준을 포함해줘."`,
+        tip: 'BRD를 먼저 작성하면 개발이 빨라집니다. 아이디어를 AI에게 설명하면 BRD 이상을 자동으로 만들어줍니다.',
+      },
+      prd: {
+        num: 'STEP 02', icon: '📄', title: 'PRD 작성',
+        sub: 'Product Requirements Document — 제품 요구사항 명세서',
+        def: '"어떻게 만드는가"를 구체적으로 정의하는 문서입니다. BRD의 아이디어를 개발팀이 실제로 만들 수 있는 수준으로 세분화합니다.',
+        items: [['화면 목록', '어떤 화면이 필요한가? (로그인·메인·설정...)'], ['기능 명세', '각 기능이 정확히 어떻게 동작하는가?'], ['데이터 구조', '어떤 정보를 저장하고 관리하는가?'], ['API 명세', '외부 서비스와 어떻게 연결되는가?']],
+        tools: ['Claude', 'ChatGPT', 'Notion'],
+        prompt: `"앞의 BRD를 바탕으로 PRD를 작성해줘.\n화면 목록, 기능 상세 명세, 데이터 구조를 포함해줘.\n개발자가 바로 코드를 작성할 수 있는 수준으로 상세하게 작성해줘."`,
+        tip: 'BRD(왜 만드나) → PRD(어떻게 만드나) 순서로 작성하세요. PRD가 명확할수록 AI가 더 정확한 코드를 작성합니다.',
+      },
+      design: {
+        num: 'STEP 03', icon: '🎨', title: '디자인 변경',
+        sub: 'UI/UX Design — 화면 디자인 및 사용자 경험 설계',
+        def: 'UI(User Interface)는 화면에 보이는 것, UX(User Experience)는 사용자가 느끼는 편의성입니다. AI에게 CSS와 레이아웃 수정을 요청하세요.',
+        items: [['색상 팔레트', '브랜드 색상 3가지 이하로 통일 (메인·보조·강조)'], ['레이아웃', '정보의 배치와 시선 흐름 설계'], ['타이포그래피', '글꼴·크기·두께의 일관성 유지'], ['컴포넌트', '버튼·카드·입력창 등 UI 요소 통일']],
+        tools: ['Figma (무료)', 'AI 이미지 생성', 'CSS 수정'],
+        prompt: `"현재 HTML/CSS를 더 세련되고 현대적인 디자인으로 수정해줘.\n메인 색상: #1c1c1a, 배경: 흰색, 폰트: Noto Sans KR.\n버튼은 둥근 모서리로, 카드에는 그림자 효과를 추가해줘."`,
+        tip: '색상은 3가지 이하, 폰트는 2종류 이하가 원칙입니다. AI에게 코드로 구현해달라고 요청하세요.',
+      },
+      api: {
+        num: 'STEP 04', icon: '🔌', title: '기능 연결',
+        sub: 'DB & API 통합 — 데이터베이스 및 외부 서비스 연결',
+        def: 'DB는 데이터를 저장하는 창고, API는 외부 서비스를 가져다 쓰는 통로입니다. AI에게 연결 코드를 요청하면 됩니다.',
+        items: [['Firebase', '구글의 무료 DB → 로그인·실시간 데이터·파일 저장'], ['Supabase', '오픈소스 무료 DB → SQL 기반·AI 친화적'], ['카카오 API', '지도·로그인·메시지 전송 기능 무료 제공'], ['OpenAI API', 'ChatGPT 기능을 내 앱에 직접 통합']],
+        tools: ['Firebase', 'Supabase', 'REST API', 'Axios'],
+        prompt: `"Firebase Firestore를 연결해서 사용자가 입력한 데이터를\n저장하고 불러오는 JavaScript 코드를 작성해줘.\ninitializeApp, collection, addDoc, getDocs 사용해줘."`,
+        tip: '처음에는 Firebase가 가장 쉽습니다. 구글 계정만 있으면 무료로 시작할 수 있고 AI가 연결 코드를 잘 만들어줍니다.',
+      },
+      trouble: {
+        num: 'STEP 05', icon: '🔍', title: '트러블슈팅',
+        sub: 'Troubleshooting — 오류 탐지 및 디버깅',
+        def: '오류(버그)를 찾아서 해결하는 과정입니다. 바이브코딩에서 오류는 당연한 것 → AI가 오류 메시지를 보면 대부분 즉시 해결해줍니다.',
+        items: [['F12 개발자도구', '브라우저에서 F12 → 콘솔 탭 → 빨간 에러 메시지 확인'], ['에러 복사', '에러 메시지 전체를 선택해서 AI에게 붙여넣기'], ['AI 질문 방법', '"이 에러가 왜 발생하고 어떻게 고치면 돼?" 질문'], ['재현 조건', '어떤 상황에서 오류가 발생하는지 AI에게 함께 설명']],
+        tools: ['Chrome DevTools', 'Claude', 'ChatGPT'],
+        prompt: `"다음 에러가 발생했어:\n[에러 메시지 전체 붙여넣기]\n\n어떤 원인이고 어떻게 고쳐야 해?\n수정된 전체 코드로 보여줘."`,
+        tip: '오류를 두려워하지 마세요. 에러 메시지는 AI에게 힌트입니다. 혼자 해석하려 하지 말고 즉시 AI에게 질문하세요.',
+      },
+      review: {
+        num: 'STEP 06', icon: '🔎', title: '코드 리뷰',
+        sub: 'Code Review — 코드 품질 검토 및 최적화',
+        def: '작성된 코드를 검토해서 숨겨진 문제를 미리 찾는 과정입니다. 배포 전 AI에게 반드시 리뷰를 요청하세요.',
+        items: [['보안 검토', '"이 코드에 보안 취약점이 있어? SQL 인젝션·XSS 위험 확인해줘"'], ['성능 최적화', '"더 빠르게 동작하도록 코드를 최적화해줘"'], ['가독성 개선', '"코드를 더 읽기 쉽고 유지보수하기 쉽게 정리해줘"'], ['오류 처리', '"네트워크 오류·빈 값 등 예외 상황 처리 코드 추가해줘"']],
+        tools: ['Claude', 'ChatGPT', 'GitHub Copilot'],
+        prompt: `"다음 코드를 리뷰해줘:\n[코드 붙여넣기]\n\n보안 취약점, 성능 문제, 가독성 개선점을 알려주고\n수정된 전체 코드를 작성해줘."`,
+        tip: '코드 리뷰는 혼자 하기 어렵습니다. AI에게 코드 전체를 붙여넣고 리뷰를 요청하면 전문가 수준의 피드백을 받을 수 있습니다.',
+      },
+      deploy: {
+        num: 'STEP 07', icon: '🚀', title: '온라인 배포',
+        sub: 'GitHub + Vercel — 무료 웹 호스팅 & 코드 버전 관리',
+        def: 'GitHub는 코드를 저장하는 클라우드 저장소, Vercel은 그 코드를 자동으로 웹사이트로 배포해주는 서비스입니다. 둘 다 무료!',
+        items: [['GitHub', '전 세계 개발자의 코드 저장소 → 포트폴리오 플랫폼 역할도 함'], ['Vercel', 'GitHub 연결 시 코드를 push할 때마다 자동 재배포 (약 30초)'], ['무료 도메인', 'yourapp.vercel.app 형태의 주소를 무료로 제공'], ['CI/CD', '코드 수정 → GitHub 업로드 → 자동 배포 자동화']],
+        tools: ['GitHub', 'Vercel', 'GitHub Pages', 'Netlify'],
+        prompt: `"내 HTML/CSS/JS 프로젝트를 GitHub에 올리고\nVercel로 배포하는 전체 과정을 단계별로 알려줘.\n처음 사용하는 사람도 할 수 있게 명령어도 포함해줘."`,
+        tip: 'GitHub에 코드를 올리는 습관이 AI 취업에서 가장 강력한 포트폴리오입니다. 오늘 만든 프로필 카드도 GitHub에 올려보세요!',
+      },
+      package: {
+        num: 'STEP 08', icon: '📦', title: '앱 패키징',
+        sub: 'App Packaging — 스마트폰 앱으로 변환 및 스토어 등록',
+        def: '웹/PC 프로그램을 스마트폰 앱(APK/IPA)으로 변환하여 Google Play Store 또는 Apple App Store에 등록하는 마지막 단계입니다.',
+        items: [['Android APK', 'Google Play Store 등록 → 개발자 계정 $25 (일회성 비용)'], ['iOS IPA', 'Apple App Store 등록 → 개발자 계정 $99/년'], ['Capacitor', '웹앱(HTML·CSS·JS)을 네이티브 앱으로 변환하는 도구'], ['Expo', 'React Native 기반 앱을 쉽게 빌드하고 배포하는 플랫폼']],
+        tools: ['Capacitor', 'Expo', 'Android Studio', 'Xcode'],
+        prompt: `"Capacitor를 사용해서 내 HTML/JS 웹앱을\nAndroid APK로 빌드하는 방법을 단계별로 알려줘.\n필요한 설치 명령어와 설정 파일도 포함해줘."`,
+        tip: '처음에는 Google Play Store가 App Store보다 훨씬 쉽습니다. Android 앱부터 도전해보세요!',
+      },
+    };
+
+    function openRd(key) {
+      const d = RD[key];
+      if (!d) return;
+      document.getElementById('rdStepNum').textContent = d.num;
+      document.getElementById('rdTitle').innerHTML = `${d.icon} ${d.title}`;
+      document.getElementById('rdSub').textContent = d.sub;
+      const itemsHTML = d.items.map(([k, v]) => `<li><b>${k}</b> — ${v}</li>`).join('');
+      const toolsHTML = d.tools.map(t => `<span class="rd-tool">${t}</span>`).join('');
+      document.getElementById('rdBody').innerHTML = `
+        <div><div class="rd-sec-title">📖 정의</div><div class="rd-def">${d.def}</div></div>
+        <div><div class="rd-sec-title">📌 핵심 내용</div><ul class="rd-items">${itemsHTML}</ul></div>
+        <div><div class="rd-sec-title">🛠 관련 도구</div><div class="rd-tools-row">${toolsHTML}</div></div>
+        <div><div class="rd-sec-title">💬 AI 프롬프트 예시</div><div class="rd-prompt"><span class="rd-prompt-label">Claude / ChatGPT에 복사해서 사용하세요</span>${d.prompt}</div></div>
+        <div class="rd-tip">💡 <b>팁:</b> ${d.tip}</div>`;
+      document.getElementById('rdOverlay').classList.add('open');
+    }
+
+    document.querySelectorAll('.vrd-step[data-rd]').forEach(el => {
+      el.addEventListener('click', () => openRd(el.dataset.rd));
+    });
+    document.getElementById('rdOverlay').addEventListener('click', e => {
+      if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+    });
+  </script>
+</body>
+
+</html>
