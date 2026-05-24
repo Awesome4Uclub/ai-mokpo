@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>목포공업고등학교 숏폼 — 역할별 표준 스크립트</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+  background: #f5f5f7;
+  color: #1d1d1f;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.page-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #86868b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+.role-card {
+  background: #ffffff;
+  border: 0.5px solid #d2d2d7;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.role-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 0.5px solid transparent;
+  transition: background 0.15s;
+}
+.role-header:hover { background: #fafafa; }
+.role-header.open-header { border-bottom-color: #e8e8ed; }
+.role-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+.badge-editor   { background:#E6F1FB; color:#0C447C; }
+.badge-script   { background:#EEEDFE; color:#3C3489; }
+.badge-narrator { background:#EAF3DE; color:#27500A; }
+.badge-music    { background:#FAEEDA; color:#633806; }
+.badge-bg       { background:#FAECE7; color:#712B13; }
+.role-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1d1d1f;
+  flex: 1;
+}
+.tool-tag {
+  font-size: 11px;
+  color: #86868b;
+  font-weight: 400;
+}
+.chevron {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aeaeb2;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.chevron svg { display: block; }
+.chevron.open { transform: rotate(180deg); }
+.role-body {
+  padding: 16px;
+  display: none;
+}
+.role-body.open { display: block; }
+.step {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.step:last-child { margin-bottom: 0; }
+.step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #f2f2f7;
+  border: 0.5px solid #d2d2d7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #636366;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-content { flex: 1; min-width: 0; }
+.step-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 4px;
+}
+.step-desc {
+  font-size: 13px;
+  color: #636366;
+  line-height: 1.6;
+}
+.script-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #86868b;
+  margin-bottom: 6px;
+  margin-top: 8px;
+}
+.script-box {
+  background: #f9f9fb;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #1d1d1f;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  border: 0.5px solid #e8e8ed;
+  font-family: inherit;
+}
+.tip-box {
+  margin-top: 10px;
+  padding: 10px 13px;
+  background: #EFF6FF;
+  border-radius: 10px;
+  border: 0.5px solid #BFDBFE;
+  font-size: 12px;
+  color: #1e40af;
+  line-height: 1.65;
+}
+.timeline-box {
+  margin-top: 14px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 0.5px solid #d2d2d7;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.timeline-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 10px;
+}
+.timeline-grid {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 6px 12px;
+  font-size: 12.5px;
+}
+.timeline-time {
+  color: #1d1d1f;
+  font-weight: 600;
+}
+.timeline-desc {
+  color: #636366;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="page-title">목포공업고등학교 숏폼 — 역할별 표준 스크립트</p>
+
+<!-- 편집 담당 (조장) -->
+<div class="role-card" id="card0">
+  <div class="role-header open-header" onclick="toggle(0)">
+    <span class="role-badge badge-editor">조장 · 편집</span>
+    <span class="role-name">편집 담당 (조장)</span>
+    <span class="tool-tag">CapCut</span>
+    <div class="chevron open" id="chev0">
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+  <div class="role-body open" id="body0">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-label">전체 기획 주도 (0~10분)</div>
+        <div class="step-desc">주제 결정 투표 진행, 콘티 초안 화이트보드에 그리기, 역할 배분 확정</div>
+        <div class="script-label">회의 진행 스크립트</div>
+        <div class="script-box">"우리 영상 주제 후보 3개야.
+① 학교 실습실 &amp; 장비 자랑
+② 졸업생 취업 성공 스토리
+③ 입학하면 뭘 배우나? 커리큘럼 소개
+
+30초 안에 손들어서 투표하자."</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-label">콘티 구조 확정 (10~20분)</div>
+        <div class="step-desc">숏폼 기본 구조 : 훅(3초) → 본론(30초) → 마무리CTA(5초)</div>
+        <div class="script-box">[ 콘티 체크리스트 ]
+□ 훅 장면 : 가장 임팩트 있는 장면/질문
+□ 본론 : 3~4개 핵심 장면 순서
+□ CTA : "목공고 검색해봐!" 자막 등
+□ 배경음악 분위기 : 업비트 / 감동 / 힙
+□ 자막 스타일 결정</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-label">편집 작업 (40~55분)</div>
+        <div class="step-desc">소재 수집 후 CapCut에서 조립</div>
+        <div class="script-box">[ CapCut 작업 순서 ]
+1. 배경화면 영상/이미지 타임라인 배치
+2. 나래이션 오디오 삽입 &amp; 싱크 맞추기
+3. 배경음악 볼륨 조절 (나래이션 -20dB)
+4. 자막 자동생성 후 교정
+5. 인트로 텍스트 효과 추가
+6. 색보정 (LUT 또는 필터)
+7. 최종 16:9 or 9:16 출력</div>
+        <div class="tip-box">조장 권한 : 다른 역할 진행상황 10분마다 체크. 소재가 늦으면 편집 먼저 가능한 것부터 시작.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 스크립트 담당 -->
+<div class="role-card" id="card1">
+  <div class="role-header" onclick="toggle(1)">
+    <span class="role-badge badge-script">스크립트</span>
+    <span class="role-name">스크립트 담당</span>
+    <span class="tool-tag">ChatGPT · Gemini · Claude</span>
+    <div class="chevron" id="chev1">
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+  <div class="role-body" id="body1">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-label">AI 3종으로 초안 생성 (0~20분)</div>
+        <div class="step-desc">동일한 프롬프트를 세 AI에 입력해서 결과 비교</div>
+        <div class="script-label">공통 프롬프트 (복사해서 사용)</div>
+        <div class="script-box">"목포공업고등학교 홍보 숏폼 영상(40초)용 나래이션 스크립트를 작성해줘.
+대상: 중학교 3학년 학생과 학부모
+톤: 활기차고 자신감 있게
+포함 내용: 실습 중심 교육, 취업률, 특별한 장점 1가지
+마무리: '목포공업고등학교에서 너의 미래를 설계해!'
+글자 수 200자 이내"</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-label">결과 비교 &amp; 최고본 선택 (20~30분)</div>
+        <div class="script-box">[ 비교 기준 ]
+✓ 가장 자연스럽게 읽히는 것
+✓ 40초 안에 읽을 수 있는 분량
+✓ 기억에 남는 표현이 있는 것
+→ 세 결과를 조합해서 최종본 작성 OK</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-label">최종 스크립트 예시</div>
+        <div class="script-box">[훅 - 3초]
+"손으로 만들고, 직접 움직인다!"
+
+[본론 - 30초]
+목포공업고등학교는 단순히 배우는 학교가 아닙니다.
+기계, 전기, 건축, 자동화…
+실제 현장에서 쓰는 기술을 익히는 곳입니다.
+졸업생 취업률 XX%, 지역 기업들이 먼저 찾아옵니다.
+
+[마무리 - 5초]
+목포공업고등학교에서 너의 미래를 설계해!</div>
+        <div class="tip-box">나래이터에게 전달할 때 : 장면 구분(/), 강조 단어(*굵게*), 쉬는 타이밍(…) 표시해서 넘겨줄 것.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 나래이터 담당 -->
+<div class="role-card" id="card2">
+  <div class="role-header" onclick="toggle(2)">
+    <span class="role-badge badge-narrator">나래이터</span>
+    <span class="role-name">나래이터 담당</span>
+    <span class="tool-tag">Typecast AI · 셀프녹음</span>
+    <div class="chevron" id="chev2">
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+  <div class="role-body" id="body2">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-label">방식 선택 (스크립트 받는 즉시)</div>
+        <div class="script-box">[ 선택 기준 ]
+Typecast AI → 전문적인 아나운서 톤 원할 때
+             → 조용한 녹음 환경이 없을 때
+셀프 녹음   → 학생 목소리로 친근감 원할 때
+             → 스마트폰 음성메모 앱 활용</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-label">Typecast AI 사용 스크립트</div>
+        <div class="script-box">1. typecast.ai 접속 → 캐릭터 선택
+   추천: 20대 남성 또는 여성 아나운서 톤
+2. 스크립트 붙여넣기
+3. 감정: '밝게', 속도: 1.1배
+4. 장면 구분마다 '쉬기' 0.5초 삽입
+5. MP3 다운로드 → 편집 담당에게 전달</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-label">셀프 녹음 체크리스트</div>
+        <div class="script-box">□ 조용한 공간 확보 (복도 X, 빈 교실 O)
+□ 스마트폰 → 음성메모 앱
+□ 마이크 입에서 15cm 거리
+□ 3번 이상 연습 후 최고 테이크 선택
+□ 시작 전 "하나, 둘, 셋" 카운트 후 녹음
+□ MP3/M4A로 저장 → 편집 담당 카톡 전송</div>
+        <div class="tip-box">목표 시간 : 나래이션 총 38초 이내 (편집 여유 확보)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 배경음악 담당 -->
+<div class="role-card" id="card3">
+  <div class="role-header" onclick="toggle(3)">
+    <span class="role-badge badge-music">배경음악</span>
+    <span class="role-name">배경음악 담당</span>
+    <span class="tool-tag">Suno AI</span>
+    <div class="chevron" id="chev3">
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+  <div class="role-body" id="body3">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-label">Suno AI 프롬프트 작성</div>
+        <div class="script-box">[ 분위기별 프롬프트 예시 ]
+
+① 에너지 넘치는 버전
+"upbeat cinematic instrumental,
+youth energy, school pride,
+120BPM, no lyrics, 45 seconds"
+
+② 감동적인 버전
+"inspiring orchestral background music,
+hopeful and motivational,
+Korean school atmosphere,
+no vocals, 45 seconds"
+
+③ 트렌디한 버전
+"modern lo-fi hip hop beat,
+positive vibes, youth,
+soft instrumental, 45 seconds"</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-label">선택 &amp; 전달 기준</div>
+        <div class="script-box">□ 3가지 프롬프트 각각 생성 (약 15분)
+□ 팀원에게 들려주고 1개 투표로 선택
+□ MP3 다운로드
+□ 편집 담당에게 전달
+
+※ 나래이션보다 5초 이상 긴 버전 선택할 것
+  (편집 시 페이드아웃 처리 필요)</div>
+        <div class="tip-box">Suno 무료 크레딧 : 하루 50회 생성 가능. 마음에 들면 즉시 다운로드. 나중에 재생성하면 다른 결과 나옴.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 배경화면 담당 -->
+<div class="role-card" id="card4">
+  <div class="role-header" onclick="toggle(4)">
+    <span class="role-badge badge-bg">배경화면</span>
+    <span class="role-name">배경화면 담당</span>
+    <span class="tool-tag">Gemini Nano Banana 2 / Omni</span>
+    <div class="chevron" id="chev4">
+      <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+        <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+  <div class="role-body" id="body4">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-label">장면별 이미지 프롬프트</div>
+        <div class="script-box">[ 콘티 장면에 맞춰 생성 ]
+
+장면① 훅 이미지
+"고등학교 실습실, 학생들이 용접 장비를
+다루는 역동적인 장면, 스파크, 활기찬 분위기,
+16:9 비율, 시네마틱 스타일"
+
+장면② 학교 전경
+"현대적인 공업고등학교 건물 외관,
+맑은 날, 학생들이 등교하는 모습,
+밝고 희망적인 색감"
+
+장면③ 취업/미래
+"젊은 엔지니어가 현장에서 일하는 모습,
+전문적이고 자신감 있는 표정,
+미래지향적 분위기"</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-label">작업 체크리스트</div>
+        <div class="script-box">□ 콘티 장면 수만큼 이미지 생성 (최소 4장)
+□ 가로형(16:9) 또는 세로형(9:16) 통일
+□ 각 이미지 1200px 이상 해상도 확인
+□ PNG 또는 JPG로 저장
+□ 파일명 : 장면01.jpg, 장면02.jpg… 으로 저장
+□ 단톡방에 업로드 → 편집 담당 전달</div>
+        <div class="tip-box">실제 학교 사진이 있다면 AI 이미지와 혼합 사용 가능. 실사 사진이 더 신뢰감을 줌.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 타임라인 -->
+<div class="timeline-box">
+  <div class="timeline-title">⏱ 1시간 타임라인</div>
+  <div class="timeline-grid">
+    <span class="timeline-time">0~10분</span><span class="timeline-desc">공동기획 : 주제 결정 + 콘티 + 역할분담 + 단톡방 개설</span>
+    <span class="timeline-time">10~30분</span><span class="timeline-desc">각자 작업 시작 (스크립트·음악·배경 병렬 진행)</span>
+    <span class="timeline-time">30~40분</span><span class="timeline-desc">소재 편집 담당에게 전달 완료</span>
+    <span class="timeline-time">40~55분</span><span class="timeline-desc">CapCut 편집 + 전원 피드백</span>
+    <span class="timeline-time">55~60분</span><span class="timeline-desc">최종 출력 &amp; 공유</span>
+  </div>
+</div>
+
+</div>
+
+<script>
+function toggle(i) {
+  const body = document.getElementById('body' + i);
+  const chev = document.getElementById('chev' + i);
+  const header = chev.closest('.role-header');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chev.classList.toggle('open', !isOpen);
+  header.classList.toggle('open-header', !isOpen);
+}
+</script>
+</body>
+</html>
